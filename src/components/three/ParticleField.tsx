@@ -5,25 +5,41 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 const STAR_COUNT = 1800;
-const MOTE_COUNT = 600;
 
-/* ---------- DARK MODE: Stars + connection lines ---------- */
-function Stars() {
+/* ---------- Stars component adapted for both themes ---------- */
+interface ThemeProps {
+  isDark: boolean;
+}
+
+function Stars({ isDark }: ThemeProps) {
   const meshRef = useRef<THREE.Points>(null);
 
+  // Recalculate color palette dynamically on theme change
   const [positions, velocities, colors] = useMemo(() => {
     const pos = new Float32Array(STAR_COUNT * 3);
     const vel = new Float32Array(STAR_COUNT * 3);
     const col = new Float32Array(STAR_COUNT * 3);
 
-    // Logo colors mapped to RGB:
-    const palette = [
-      { r: 0.25, g: 0.78, b: 0.82 }, // teal/cyan
-      { r: 0.25, g: 0.78, b: 0.82 }, // teal dominant
+    // Color palettes designed for perfect contrast:
+    // - Dark Mode uses vibrant bright brand star colors
+    // - Light Mode uses deep, elegant, jewel-toned charcoal brand colors
+    const darkPalette = [
+      { r: 0.25, g: 0.78, b: 0.82 }, // teal/cyan dominant
+      { r: 0.25, g: 0.78, b: 0.82 },
       { r: 0.38, g: 0.72, b: 0.45 }, // green
       { r: 0.85, g: 0.72, b: 0.22 }, // yellow
-      { r: 0.80, g: 0.30, b: 0.25 }, // red (rare)
+      { r: 0.80, g: 0.30, b: 0.25 }, // red
     ];
+
+    const lightPalette = [
+      { r: 0.08, g: 0.32, b: 0.36 }, // deep teal/cyan (charcoal highlight)
+      { r: 0.08, g: 0.32, b: 0.36 },
+      { r: 0.12, g: 0.30, b: 0.18 }, // deep green
+      { r: 0.44, g: 0.35, b: 0.10 }, // deep amber
+      { r: 0.15, g: 0.13, b: 0.16 }, // deep charcoal base
+    ];
+
+    const palette = isDark ? darkPalette : lightPalette;
 
     for (let i = 0; i < STAR_COUNT; i++) {
       const i3 = i * 3;
@@ -39,7 +55,7 @@ function Stars() {
       vel[i3 + 1] = (Math.random() - 0.5) * 0.0015;
       vel[i3 + 2] = (Math.random() - 0.5) * 0.0015;
 
-      // Weight: 60% cyan, 20% green, 12% yellow, 8% red
+      // Weight: 60% teal/cyan, 20% green, 12% yellow/amber, 8% base/red
       const rng = Math.random();
       const c = rng < 0.6 ? palette[0] : rng < 0.8 ? palette[2] : rng < 0.92 ? palette[3] : palette[4];
       col[i3] = c.r;
@@ -47,7 +63,7 @@ function Stars() {
       col[i3 + 2] = c.b;
     }
     return [pos, vel, col];
-  }, []);
+  }, [isDark]);
 
   const posAttr = useMemo(() => new THREE.BufferAttribute(positions, 3), [positions]);
   const colAttr = useMemo(() => new THREE.BufferAttribute(colors, 3), [colors]);
@@ -83,19 +99,20 @@ function Stars() {
         <primitive attach="attributes-color" object={colAttr} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.035}
+        size={isDark ? 0.035 : 0.045} // Slightly larger in light mode to remain crisp and visible
         vertexColors
         transparent
-        opacity={0.85}
+        opacity={isDark ? 0.85 : 0.92} // Higher opacity in light mode for deep contrast
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={isDark ? THREE.AdditiveBlending : THREE.NormalBlending} // Additive for stars, Normal for charcoal dots
       />
     </points>
   );
 }
 
-function ConnectionLines() {
+/* ---------- Constellation lines adapted for both themes ---------- */
+function ConnectionLines({ isDark }: ThemeProps) {
   const lineRef = useRef<THREE.LineSegments>(null);
   const initialPositions = useMemo(() => new Float32Array(200 * 6), []);
   const posAttr = useMemo(() => new THREE.BufferAttribute(initialPositions, 3), [initialPositions]);
@@ -127,101 +144,17 @@ function ConnectionLines() {
         <primitive attach="attributes-position" object={posAttr} />
       </bufferGeometry>
       <lineBasicMaterial
-        color="#3dd8e0"
+        color={isDark ? "#3dd8e0" : "#126066"} // Bright cyan in dark mode, deep rich teal in light mode
         transparent
-        opacity={0.05}
+        opacity={isDark ? 0.05 : 0.09} // Balanced line visibility
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={isDark ? THREE.AdditiveBlending : THREE.NormalBlending}
       />
     </lineSegments>
   );
 }
 
-/* ---------- LIGHT MODE: Morning dust motes + soft particles ---------- */
-function MorningMotes() {
-  const meshRef = useRef<THREE.Points>(null);
-
-  const [positions, velocities, colors] = useMemo(() => {
-    const pos = new Float32Array(MOTE_COUNT * 3);
-    const vel = new Float32Array(MOTE_COUNT * 3);
-    const col = new Float32Array(MOTE_COUNT * 3);
-
-    for (let i = 0; i < MOTE_COUNT; i++) {
-      const i3 = i * 3;
-      // Wider, more diffused distribution
-      pos[i3] = (Math.random() - 0.5) * 14;
-      pos[i3 + 1] = (Math.random() - 0.5) * 10;
-      pos[i3 + 2] = (Math.random() - 0.5) * 8;
-
-      // Very gentle upward drift
-      vel[i3] = (Math.random() - 0.5) * 0.003;
-      vel[i3 + 1] = Math.random() * 0.002 + 0.001;
-      vel[i3 + 2] = (Math.random() - 0.5) * 0.002;
-
-      // Warm golden-teal color mix
-      const warm = Math.random();
-      if (warm < 0.5) {
-        // Soft gold / sunlight motes
-        col[i3] = 0.92; col[i3 + 1] = 0.82; col[i3 + 2] = 0.45;
-      } else if (warm < 0.8) {
-        // Teal highlights
-        col[i3] = 0.3; col[i3 + 1] = 0.72; col[i3 + 2] = 0.78;
-      } else {
-        // Soft white dust
-        col[i3] = 0.9; col[i3 + 1] = 0.9; col[i3 + 2] = 0.88;
-      }
-    }
-    return [pos, vel, col];
-  }, []);
-
-  const posAttr = useMemo(() => new THREE.BufferAttribute(positions, 3), [positions]);
-  const colAttr = useMemo(() => new THREE.BufferAttribute(colors, 3), [colors]);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const posA = meshRef.current.geometry.attributes.position as THREE.BufferAttribute;
-    const arr = posA.array as Float32Array;
-    const t = state.clock.elapsedTime;
-
-    for (let i = 0; i < MOTE_COUNT; i++) {
-      const i3 = i * 3;
-      // Gentle breeze + upward float
-      arr[i3] += velocities[i3] + Math.sin(t * 0.4 + i * 0.05) * 0.002;
-      arr[i3 + 1] += velocities[i3 + 1] + Math.sin(t * 0.3 + i * 0.03) * 0.001;
-      arr[i3 + 2] += velocities[i3 + 2] + Math.cos(t * 0.25 + i * 0.04) * 0.001;
-
-      // Wrap particles that float too high
-      if (arr[i3 + 1] > 6) {
-        arr[i3 + 1] = -5;
-        arr[i3] = (Math.random() - 0.5) * 14;
-      }
-      // Horizontal bounds
-      if (Math.abs(arr[i3]) > 8) arr[i3] *= 0.95;
-    }
-    posA.needsUpdate = true;
-    meshRef.current.rotation.y = t * 0.015;
-  });
-
-  return (
-    <points ref={meshRef}>
-      <bufferGeometry>
-        <primitive attach="attributes-position" object={posAttr} />
-        <primitive attach="attributes-color" object={colAttr} />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.06}
-        vertexColors
-        transparent
-        opacity={0.45}
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.NormalBlending}
-      />
-    </points>
-  );
-}
-
-/* ---------- Scene wrapper with theme awareness ---------- */
+/* ---------- Reusable Field wrapper ---------- */
 interface ParticleFieldProps {
   className?: string;
 }
@@ -230,7 +163,7 @@ export default function ParticleField({ className }: ParticleFieldProps) {
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    // Listen for theme changes on <html>
+    // Listen for theme changes on <html> element
     const checkTheme = () => {
       setIsDark(document.documentElement.classList.contains("dark"));
     };
@@ -252,15 +185,9 @@ export default function ParticleField({ className }: ParticleFieldProps) {
         }}
         style={{ background: "transparent" }}
       >
-        <ambientLight intensity={isDark ? 0.3 : 0.6} />
-        {isDark ? (
-          <>
-            <Stars />
-            <ConnectionLines />
-          </>
-        ) : (
-          <MorningMotes />
-        )}
+        <ambientLight intensity={isDark ? 0.3 : 0.8} />
+        <Stars isDark={isDark} />
+        <ConnectionLines isDark={isDark} />
       </Canvas>
     </div>
   );

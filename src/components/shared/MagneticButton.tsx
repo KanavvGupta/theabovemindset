@@ -34,11 +34,11 @@ export function MagneticButton({
 
   const variantStyles = {
     primary:
-      "bg-tam-cyan/90 hover:bg-tam-cyan text-white font-semibold shadow-lg shadow-tam-cyan/20 hover:shadow-tam-cyan/30 border border-tam-cyan/30",
+      "bg-primary text-primary-foreground border border-primary/10 hover:opacity-95 shadow-md shadow-primary/10 hover:shadow-lg hover:shadow-primary/25 font-semibold",
     secondary:
-      "glass text-foreground font-medium border-foreground/15 hover:border-foreground/25",
+      "glass text-foreground border border-border hover:bg-muted/40 font-medium",
     ghost:
-      "bg-transparent text-tam-cyan hover:bg-tam-cyan/5 border border-transparent hover:border-tam-cyan/20",
+      "bg-transparent text-primary hover:bg-primary/5 border border-transparent font-medium",
   };
 
   const Component = href ? "a" : "button";

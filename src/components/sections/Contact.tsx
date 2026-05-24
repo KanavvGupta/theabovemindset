@@ -80,8 +80,8 @@ export default function Contact() {
     {
       icon: "💬",
       label: "WhatsApp",
-      value: "+91 807 605 6534",
-      href: "https://wa.me/918076056534",
+      value: "+91 87965 21814",
+      href: "https://wa.me/918796521814",
     },
     {
       icon: "🎮",
@@ -92,7 +92,7 @@ export default function Contact() {
     {
       icon: "📍",
       label: "Based in",
-      value: "New Delhi, India — Working Globally",
+      value: "New Delhi, India — Serving India (Global expansions coming soon)",
       href: null,
     },
   ];
@@ -175,7 +175,7 @@ export default function Contact() {
                       value={formState.name}
                       onChange={handleChange}
                       required
-                      className="bg-white/5 border-white/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50"
+                      className="bg-foreground/5 border-foreground/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50"
                     />
                     <ValidationError prefix="Name" field="name" errors={formspreeState.errors} />
                   </div>
@@ -191,7 +191,7 @@ export default function Contact() {
                       value={formState.email}
                       onChange={handleChange}
                       required
-                      className="bg-white/5 border-white/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50"
+                      className="bg-foreground/5 border-foreground/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50"
                     />
                     <ValidationError prefix="Email" field="email" errors={formspreeState.errors} />
                   </div>
@@ -207,7 +207,7 @@ export default function Contact() {
                     placeholder="AI agent, website, automation..."
                     value={formState.project}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50"
+                    className="bg-foreground/5 border-foreground/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50"
                   />
                 </div>
 
@@ -223,7 +223,7 @@ export default function Contact() {
                     value={formState.message}
                     onChange={handleChange}
                     required
-                    className="bg-white/5 border-white/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50 resize-none"
+                    className="bg-foreground/5 border-foreground/10 focus:border-tam-cyan/50 focus:ring-tam-cyan/20 placeholder:text-muted-foreground/50 resize-none"
                   />
                   <ValidationError prefix="Message" field="message" errors={formspreeState.errors} />
                 </div>

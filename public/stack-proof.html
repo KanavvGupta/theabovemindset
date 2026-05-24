@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE ABOVE MINDSET AI Studio — Tools We Wield</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            'tam-cyan': 'oklch(0.75 0.15 195)',
+            'tam-cyan-dark': 'oklch(0.55 0.15 195)',
+            'tam-amber': 'oklch(0.78 0.16 85)',
+            'tam-surface': 'oklch(0.15 0.005 260)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* DESIGN SYSTEM: THE ABOVE MINDSET */
+    :root, :root.dark {
+      --background: oklch(0.08 0.008 260);
+      --foreground: oklch(0.95 0 0);
+      
+      /* Glass Card Tokens */
+      --card-bg: oklch(0.12 0.005 260 / 45%);
+      --glass-border: oklch(1 0 0 / 8%);
+      --glass-inner-border: oklch(1 0 0 / 6%);
+      --glass-glow: oklch(0.75 0.15 195 / 8%);
+      
+      /* Text overrides */
+      --text-title: oklch(0.95 0 0);
+      --text-muted: oklch(0.60 0.005 260);
+      
+      /* Tool Pills */
+      --pill-bg: oklch(1 0 0 / 2%);
+      --pill-border: oklch(1 0 0 / 5%);
+      --pill-bg-hover: oklch(1 0 0 / 5%);
+      --pill-bg-active: oklch(1 0 0 / 8%);
+      
+      /* Accent Colors */
+      --color-primary: oklch(0.75 0.15 195);
+      --color-primary-glow: oklch(0.75 0.15 195 / 15%);
+      
+      /* Glowing spotlight */
+      --glow-color-radial: oklch(0.75 0.15 195 / 10%);
+      --glow-color-border: oklch(0.75 0.15 195 / 25%);
+      --glow-color-shadow: oklch(0.75 0.15 195 / 8%);
+    }
+    
+    :root.light {
+      --background: oklch(0.97 0.006 220);
+      --foreground: oklch(0.14 0.02 260);
+      
+      /* Glass Card Tokens */
+      --card-bg: oklch(1 0 0 / 72%);
+      --glass-border: oklch(0 0 0 / 8%);
+      --glass-inner-border: oklch(1 0 0 / 90%);
+      --glass-glow: oklch(0.45 0.18 195 / 5%);
+      
+      /* Text overrides */
+      --text-title: oklch(0.14 0.02 260);
+      --text-muted: oklch(0.40 0.015 260);
+      
+      /* Tool Pills */
+      --pill-bg: oklch(0 0 0 / 2%);
+      --pill-border: oklch(0 0 0 / 6%);
+      --pill-bg-hover: oklch(0 0 0 / 3%);
+      --pill-bg-active: oklch(0 0 0 / 6%);
+      
+      /* Accent Colors */
+      --color-primary: oklch(0.45 0.18 195);
+      --color-primary-glow: oklch(0.45 0.18 195 / 12%);
+      
+      /* Glowing spotlight */
+      --glow-color-radial: oklch(0.45 0.18 195 / 8%);
+      --glow-color-border: oklch(0.45 0.18 195 / 20%);
+      --glow-color-shadow: oklch(0.45 0.18 195 / 6%);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Custom Title Gradient */
+    .text-gradient {
+      background: linear-gradient(135deg, var(--color-primary) 0%, oklch(0.78 0.16 85) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Light Mode Sunlight atmospheric glow directionally */
+    .sunlight-bg {
+      position: absolute;
+      top: -150px;
+      left: -150px;
+      width: 750px;
+      height: 750px;
+      background: radial-gradient(circle at 20% 20%, oklch(0.88 0.12 85 / 18%) 0%, oklch(0.75 0.15 195 / 6%) 50%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(60px);
+      transition: opacity 0.5s ease;
+      opacity: 0;
+    }
+    
+    .light .sunlight-bg {
+      opacity: 1;
+    }
+
+    /* Subtle Dark ambient backlighting */
+    .dark-glow-bg {
+      position: absolute;
+      top: 20%;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, oklch(0.75 0.15 195 / 3%) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    .light .dark-glow-bg {
+      opacity: 0;
+    }
+
+    /* Premium Glass Surfaces */
+    .premium-glass {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px) saturate(1.8);
+      border: 1px solid var(--glass-border);
+      box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.01),
+        inset 0 1px 1px var(--glass-inner-border);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .dark .premium-glass {
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px var(--glass-inner-border);
+    }
+
+    .premium-glass:hover {
+      transform: translateY(-2px);
+    }
+    
+    .dark .premium-glass:hover {
+      border-color: oklch(0.75 0.15 195 / 25%);
+      box-shadow: 
+        0 12px 40px oklch(0.75 0.15 195 / 6%),
+        inset 0 1px 1.5px oklch(1 0 0 / 12%);
+    }
+
+    .light .premium-glass:hover {
+      border-color: oklch(0.45 0.18 195 / 20%);
+      box-shadow: 
+        0 12px 40px oklch(0.45 0.18 195 / 5%),
+        inset 0 1px 1.5px oklch(1 0 0 / 95%);
+    }
+
+    /* Hero Card Style - Premium gradient border wrapper */
+    .hero-card {
+      z-index: 10;
+    }
+    
+    @keyframes border-rotate {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 1rem;
+      padding: 1.5px;
+      background: linear-gradient(90deg, 
+        oklch(0.75 0.15 195) 0%, 
+        oklch(0.78 0.16 85 / 20%) 25%, 
+        oklch(0.75 0.15 195 / 10%) 50%, 
+        oklch(0.78 0.16 85 / 20%) 75%, 
+        oklch(0.75 0.15 195) 100%
+      );
+      background-size: 200% auto;
+      animation: border-rotate 7s linear infinite;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.75;
+      transition: opacity 0.4s ease;
+    }
+
+    .light .hero-card::before {
+      background: linear-gradient(90deg, 
+        oklch(0.45 0.18 195) 0%, 
+        oklch(0.52 0.16 85 / 30%) 25%, 
+        oklch(0.45 0.18 195 / 15%) 50%, 
+        oklch(0.52 0.16 85 / 30%) 75%, 
+        oklch(0.45 0.18 195) 100%
+      );
+      background-size: 200% auto;
+      opacity: 0.65;
+    }
+    
+    .hero-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Aura glow behind Hero Card */
+    .hero-aura {
+      position: absolute;
+      inset: -15%;
+      background: radial-gradient(circle at 50% 50%, oklch(0.75 0.15 195 / 5%) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .light .hero-aura {
+      background: radial-gradient(circle at 50% 50%, oklch(0.45 0.18 195 / 4%) 0%, transparent 70%);
+    }
+    .hero-card:hover .hero-aura {
+      opacity: 1;
+    }
+
+    /* Tool Pill Layout & Touch Targets */
+    .tool-pill {
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      height: 3.25rem; /* 52px height ensures standard 44px+ touch targets */
+      transform: translateZ(0);
+      will-change: transform, border-color, box-shadow;
+      transition: 
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+        border-color 0.3s ease, 
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .tool-pill span {
+      color: var(--text-title);
+      transition: color 0.3s ease;
+    }
+
+    /* GPU-Accelerated Cursor Reactive Spotlight */
+    @media (hover: hover) {
+      .tool-pill:hover {
+        transform: translateY(-2px) scale(1.02);
+        border-color: var(--glow-border-color, var(--glow-color-border));
+        box-shadow: 0 8px 20px var(--glow-shadow-color, var(--glow-color-shadow));
+      }
+      
+      .tool-pill::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(110px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-radial-color, var(--glow-color-radial)), transparent 80%);
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+        z-index: 0;
+      }
+      
+      .tool-pill:hover::before {
+        opacity: 1;
+      }
+
+      /* Animated Light trail shimmer on hover */
+      .tool-pill::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+        transform: translateX(-100%);
+        pointer-events: none;
+        z-index: 1;
+      }
+      .light .tool-pill::after {
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      }
+      
+      .tool-pill:hover::after {
+        animation: shimmer-trail 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* Icon scale dynamic bounce on hover */
+      .tool-pill:hover .tool-icon-wrap {
+        transform: scale(1.1) rotate(2deg);
+        filter: drop-shadow(0 0 5px var(--glow-brand-color, var(--color-primary)));
+      }
+    }
+
+    @keyframes shimmer-trail {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Mobile active/touch state triggers instead of hover */
+    @media (hover: none) {
+      .tool-pill:active {
+        transform: scale(0.97);
+        background-color: var(--pill-bg-active);
+        border-color: var(--glow-border-color, var(--glow-color-border));
+      }
+    }
+
+    .tool-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+      z-index: 1;
+    }
+
+    /* CLAUDE Standout treatment */
+    .claude-pill {
+      background: oklch(0.78 0.16 85 / 2%) !important;
+      border-color: oklch(0.78 0.16 85 / 8%) !important;
+    }
+    .light .claude-pill {
+      background: oklch(0.52 0.16 85 / 2%) !important;
+      border-color: oklch(0.52 0.16 85 / 8%) !important;
+    }
+
+    @media (hover: hover) {
+      .claude-pill:hover {
+        background: oklch(0.78 0.16 85 / 8%) !important;
+        border-color: oklch(0.78 0.16 85 / 35%) !important;
+        transform: translateY(-3.5px) scale(1.03) !important;
+        box-shadow: 
+          0 10px 25px oklch(0.78 0.16 85 / 12%),
+          0 16px 40px oklch(0.75 0.15 195 / 6%),
+          inset 0 1px 1px oklch(1 0 0 / 10%) !important;
+      }
+      
+      .light .claude-pill:hover {
+        background: oklch(0.52 0.16 85 / 6%) !important;
+        border-color: oklch(0.52 0.16 85 / 30%) !important;
+        box-shadow: 
+          0 10px 25px oklch(0.52 0.16 85 / 8%),
+          0 16px 40px oklch(0.45 0.18 195 / 4%),
+          inset 0 1px 1.5px oklch(1 0 0 / 95%) !important;
+      }
+
+      .claude-pill::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, oklch(0.78 0.16 85 / 15%), transparent);
+        transform: translateX(-100%);
+        pointer-events: none;
+      }
+      
+      .claude-pill:hover::after {
+        animation: claude-sheen 1.8s ease-in-out infinite;
+      }
+    }
+
+    @keyframes claude-sheen {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Text typography helper */
+    .title-theme {
+      color: var(--text-title);
+    }
+    .muted-theme {
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body class="min-h-screen relative flex flex-col justify-between py-12 md:py-24 px-4 sm:px-6 md:px-12 lg:px-24">
+
+  <!-- Sunlight atmospheric glow -->
+  <div class="sunlight-bg"></div>
+  <!-- Dark ambient glow -->
+  <div class="dark-glow-bg"></div>
+
+  <!-- Theme Toggle Floating Button -->
+  <button id="theme-toggle" class="fixed top-6 right-6 z-50 p-3 rounded-full premium-glass hover:scale-105 active:scale-95 cursor-pointer focus:outline-none flex items-center justify-center" aria-label="Toggle theme">
+    <!-- Sun Icon (visible in Dark Mode) -->
+    <svg id="theme-sun" class="w-5 h-5 text-tam-amber hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+    </svg>
+    <!-- Moon Icon (visible in Light Mode) -->
+    <svg id="theme-moon" class="w-5 h-5 text-tam-cyan-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+  </button>
+
+  <div class="max-w-7xl mx-auto w-full z-10">
+    <!-- Header -->
+    <header class="text-center mb-16 md:mb-24">
+      <div class="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full border border-tam-cyan/30 text-tam-cyan bg-tam-cyan/5 text-xs font-semibold uppercase tracking-widest font-mono">
+        <img src="THE-ABOVE-MINDSET-LOGO.jpg" alt="Logo" class="w-4 h-4 rounded-full object-cover border border-tam-cyan/30" onerror="this.style.display='none'">
+        THE ABOVE MINDSET AI Studio
+      </div>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 title-theme">
+        Tools we <span class="text-gradient">wield.</span>
+      </h2>
+      <p class="text-base sm:text-lg md:text-xl muted-theme max-w-2xl mx-auto leading-relaxed">
+        A production-hardened stacking showcase. We do not copy templates or play with empty tools; every logo represents deep implementation capabilities.
+      </p>
+    </header>
+
+    <!-- Interactive Stack Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto items-stretch">
+      
+      <!-- Category 1: AI & Agents (Hero Card) -->
+      <div class="premium-glass hero-card rounded-2xl p-6 md:p-8 flex flex-col justify-between h-full">
+        <!-- Aura Glow Effect -->
+        <div class="hero-aura"></div>
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold tracking-tight text-tam-cyan">AI & Agents</h3>
+            <span class="text-[10px] uppercase tracking-widest bg-tam-cyan/10 text-tam-cyan border border-tam-cyan/20 px-2 py-0.5 rounded font-mono font-bold">Production Focus</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3.5">
+            <!-- OpenAI -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.65 0.18 155);
+              --glow-radial-color: oklch(0.65 0.18 155 / 12%);
+              --glow-border-color: oklch(0.65 0.18 155 / 25%);
+              --glow-shadow-color: oklch(0.65 0.18 155 / 8%);
+            ">
+              <div class="tool-icon-wrap text-emerald-500 w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M21.7,11.3c0-0.7-0.1-1.3-0.5-1.9c0.4-0.8,0.4-1.8,0-2.6c-0.4-0.8-1.2-1.3-2.1-1.5c-0.4-0.7-1.1-1.2-1.9-1.4 c-0.8-0.2-1.7-0.1-2.4,0.3c-0.6-0.6-1.4-0.9-2.2-0.9c-0.8,0-1.6,0.3-2.2,0.9C9.8,3.7,8.9,3.6,8.1,3.8C7.3,4,6.6,4.5,6.2,5.2 C5.3,5.4,4.5,5.9,4.1,6.7C3.7,7.5,3.7,8.5,4.1,9.3C3.7,9.9,3.5,10.6,3.5,11.3c0,0.7,0.1,1.3,0.5,1.9c-0.4,0.8-0.4,1.8,0,2.6 c0.4,0.8,1.2,1.3,2.1,1.5c0.4,0.7,1.1,1.2,1.9,1.4c0.4,0.1,0.9,0.1,1.3,0c0.3,0.5,0.7,0.9,1.1,1.2c0.7,0.5,1.5,0.8,2.4,0.8 c0.8,0,1.6-0.3,2.2-0.9c0.7,0.4,1.6,0.5,2.4,0.3c0.8-0.2,1.5-0.7,1.9-1.4c0.9-0.2,1.7-0.7,2.1-1.5c0.4-0.8,0.4-1.8,0-2.6 C21.5,12.7,21.7,12,21.7,11.3z M12.8,20.5c-0.6,0.3-1.3,0.3-1.9,0.1l3.5-2l1.7,1C15.8,20,15.3,20.3,12.8,20.5z M8.1,18.9 c-0.4-0.4-0.7-0.9-0.8-1.5l3.5-2v2.1l-1.8,1C8.7,18.7,8.4,18.9,8.1,18.9z M5.3,14.6c-0.2-0.6-0.1-1.3,0.2-1.9l3.5,2H4.9 C5,14.1,5.2,13.7,5.3,14.6z M5.9,10.1C6.1,9.5,6.6,9.1,7.1,8.8l3.5,2v-4.1c-0.5,0.1-1,0.3-1.4,0.6c-0.2,0.2-0.5,0.5-0.6,0.9 l-1,1.8C7.3,9.8,7.2,10,5.9,10.1z M10.2,7.3c0.6-0.3,1.3-0.3,1.9-0.1l-3.5,2l-1.7-1C7.2,7.8,7.7,7.5,10.2,7.3z M14.9,8.9 c0.4,0.4,0.7,0.9,0.8,1.5l-3.5,2V10.3l1.8-1C14.3,9.1,14.6,8.9,14.9,8.9z M17.7,13.2c0.2,0.6,0.1,1.3-0.2,1.9l-3.5-2h4.1 C18,13.7,17.8,14.1,17.7,13.2z M17.1,17.7c-0.2,0.6-0.7,1-1.2,1.3l-3.5-2v4.1c0.5-0.1,1-0.3,1.4-0.6c0.2-0.2,0.5-0.5,0.6-0.9 l1-1.8C15.7,18,15.8,17.8,17.1,17.7z"/>
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">OpenAI</span>
+            </div>
+            
+            <!-- Claude (Stands Out) -->
+            <div class="tool-pill claude-pill group" style="
+              --glow-brand-color: oklch(0.78 0.16 85);
+              --glow-radial-color: oklch(0.78 0.16 85 / 14%);
+              --glow-border-color: oklch(0.78 0.16 85 / 35%);
+              --glow-shadow-color: oklch(0.78 0.16 85 / 10%);
+            ">
+              <div class="tool-icon-wrap text-[#D97757] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12,2A1.5,1.5,0,0,1,13.5,3.5v3.1A5.5,5.5,0,0,1,17,8.7l2.2-2.2a1.5,1.5,0,1,1,2.1,2.1L19.1,10.8a5.5,5.5,0,0,1,2.1,3.5h3.1a1.5,1.5,0,1,1,0,3H21.2a5.5,5.5,0,0,1-2.1,3.5l2.2,2.2a1.5,1.5,0,1,1-2.1,2.1l-2.2-2.2a5.5,5.5,0,0,1-3.5,2.1V20.5a1.5,1.5,0,1,1-3,0V17.4a5.5,5.5,0,0,1-3.5-2.1l-2.2,2.2a1.5,1.5,0,1,1-2.1-2.1l2.2-2.2a5.5,5.5,0,0,1-2.1-3.5H1.5a1.5,1.5,0,1,1,0-3H4.6A5.5,5.5,0,0,1,6.7,8.7L4.5,6.5A1.5,1.5,0,1,1,6.6,4.4l2.2,2.2A5.5,5.5,0,0,1,12,6.6V3.5A1.5,1.5,0,0,1,12,2Z"/>
+                </svg>
+              </div>
+              <span class="text-sm font-bold tracking-tight flex items-center gap-1.5">
+                Claude
+                <span class="w-1.5 h-1.5 rounded-full bg-tam-amber animate-pulse"></span>
+              </span>
+            </div>
+
+            <!-- LangChain -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.75 0.15 195);
+              --glow-radial-color: oklch(0.75 0.15 195 / 12%);
+              --glow-border-color: oklch(0.75 0.15 195 / 25%);
+              --glow-shadow-color: oklch(0.75 0.15 195 / 8%);
+            ">
+              <div class="tool-icon-wrap text-tam-cyan w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5.5 h-5.5">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">LangChain</span>
+            </div>
+
+            <!-- CrewAI -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.60 0.15 240);
+              --glow-radial-color: oklch(0.60 0.15 240 / 12%);
+              --glow-border-color: oklch(0.60 0.15 240 / 25%);
+              --glow-shadow-color: oklch(0.60 0.15 240 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#3B82F6] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5.5 h-5.5">
+                  <circle cx="12" cy="5" r="3" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="18" r="3" />
+                  <line x1="12" y1="8" x2="6" y2="15" />
+                  <line x1="12" y1="8" x2="18" y2="15" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">CrewAI</span>
+            </div>
+
+            <!-- Pinecone -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.65 0.18 155);
+              --glow-radial-color: oklch(0.65 0.18 155 / 12%);
+              --glow-border-color: oklch(0.65 0.18 155 / 25%);
+              --glow-shadow-color: oklch(0.65 0.18 155 / 8%);
+            ">
+              <div class="tool-icon-wrap text-emerald-600 w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2L8 6h8l-4-4zm-4 6l-3 4h14l-3-4H8zm-3 6l-2 4h18l-2-4H5zm7 6v2h-2v-2h2z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Pinecone</span>
+            </div>
+
+            <!-- Supabase -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.65 0.18 155);
+              --glow-radial-color: oklch(0.65 0.18 155 / 12%);
+              --glow-border-color: oklch(0.65 0.18 155 / 25%);
+              --glow-shadow-color: oklch(0.65 0.18 155 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#3ECF8E] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M21.36 10.02a.68.68 0 00-.54-.54l-7.24-1.04 3.73-6.6a.68.68 0 00-1.12-.76l-13.6 12a.68.68 0 00.42 1.18l7.24 1.04-3.73 6.6a.68.68 0 001.12.76l13.6-12a.68.68 0 00.12-.64z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Supabase</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 2: Frontend & 3D -->
+      <div class="premium-glass rounded-2xl p-6 md:p-8 flex flex-col justify-between h-full">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold tracking-tight title-theme">Frontend & 3D</h3>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3.5">
+            <!-- Next.js -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: var(--text-title);
+              --glow-radial-color: var(--glow-color-radial);
+              --glow-border-color: var(--glow-color-border);
+              --glow-shadow-color: var(--glow-color-shadow);
+            ">
+              <div class="tool-icon-wrap text-white dark:text-white light:text-black w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5.5 h-5.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M17.5 17.5L9.5 8v8.5" stroke-linecap="round" />
+                  <path d="M14.5 8h3v9.5" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Next.js</span>
+            </div>
+
+            <!-- React -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.75 0.15 195);
+              --glow-radial-color: oklch(0.75 0.15 195 / 12%);
+              --glow-border-color: oklch(0.75 0.15 195 / 25%);
+              --glow-shadow-color: oklch(0.75 0.15 195 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#61DAFB] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5.5 h-5.5 animate-[spin_25s_linear_infinite]">
+                  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(30 12 12)" />
+                  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(90 12 12)" />
+                  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(150 12 12)" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">React</span>
+            </div>
+
+            <!-- Three.js -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: var(--text-title);
+              --glow-radial-color: var(--glow-color-radial);
+              --glow-border-color: var(--glow-color-border);
+              --glow-shadow-color: var(--glow-color-shadow);
+            ">
+              <div class="tool-icon-wrap text-neutral-200 dark:text-neutral-200 light:text-neutral-800 w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5.5 h-5.5">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Three.js</span>
+            </div>
+
+            <!-- GSAP -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.65 0.18 155);
+              --glow-radial-color: oklch(0.65 0.18 155 / 12%);
+              --glow-border-color: oklch(0.65 0.18 155 / 25%);
+              --glow-shadow-color: oklch(0.65 0.18 155 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#88CE02] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15.5h-2v-2h2v2zm0-4.5h-2V7h2v6z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">GSAP</span>
+            </div>
+
+            <!-- Framer Motion -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: var(--text-title);
+              --glow-radial-color: var(--glow-color-radial);
+              --glow-border-color: var(--glow-color-border);
+              --glow-shadow-color: var(--glow-color-shadow);
+            ">
+              <div class="tool-icon-wrap text-white dark:text-white light:text-black w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2L2 12h7v10l10-10h-7V2z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Framer Motion</span>
+            </div>
+
+            <!-- Tailwind CSS -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.75 0.15 195);
+              --glow-radial-color: oklch(0.75 0.15 195 / 12%);
+              --glow-border-color: oklch(0.75 0.15 195 / 25%);
+              --glow-shadow-color: oklch(0.75 0.15 195 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#38B2AC] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,14.816,11.8,18.001,11.8c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.336,6.382,15.186,5.2,12.001,4.8z M6.001,11.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.328,2.376,5.513,2.376c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.336,13.382,9.186,12.2,6.001,11.8z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Tailwind CSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 3: Backend & Infra -->
+      <div class="premium-glass rounded-2xl p-6 md:p-8 flex flex-col justify-between h-full">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold tracking-tight title-theme">Backend & Infra</h3>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3.5">
+            <!-- Node.js -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.65 0.18 155);
+              --glow-radial-color: oklch(0.65 0.18 155 / 12%);
+              --glow-border-color: oklch(0.65 0.18 155 / 25%);
+              --glow-shadow-color: oklch(0.65 0.18 155 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#68A063] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2L4 6.5v9L12 20l8-4.5v-9L12 2zm6 12.5l-6 3.4-6-3.4v-5l6-3.4 6 3.4v5z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Node.js</span>
+            </div>
+
+            <!-- Python -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.78 0.16 85);
+              --glow-radial-color: oklch(0.78 0.16 85 / 12%);
+              --glow-border-color: oklch(0.78 0.16 85 / 25%);
+              --glow-shadow-color: oklch(0.78 0.16 85 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#3776AB] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M11.998,2C6.48,2,6.01,2.44,6.01,5.01v1.98h6.01v0.99H3.99c-2.57,0-3,0.47-3,3.01v4c0,2.54,0.43,3.01,3,3.01h1.99v-2.02 c0-2.57,0.44-2.99,3-2.99h6.01c2.56,0,3-0.44,3-3.01V6.99c0-2.57-0.47-3.01-3-3.01H11.998z M8.99,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S8.44,4,8.99,4z M20.01,8.01H18v2.02c0,2.57-0.44,2.99-3,2.99H8.99c-2.56,0-3,0.44-3,3.01v4 c0,2.57,0.47,3.01,3,3.01h6.01c5.52,0,5.99-0.44,5.99-3.01v-1.98h-6.01v-0.99h8.03c2.57,0,3-0.47,3-3.01v-4 C26,8.48,25.57,8.01,20.01,8.01z M15.01,18.01c0.55,0,1,0.45,1,1s-0.45,1-1,1s-1-0.45-1-1S14.46,18.01,15.01,18.01z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Python</span>
+            </div>
+
+            <!-- FastAPI -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.65 0.18 155);
+              --glow-radial-color: oklch(0.65 0.18 155 / 12%);
+              --glow-border-color: oklch(0.65 0.18 155 / 25%);
+              --glow-shadow-color: oklch(0.65 0.18 155 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#05998B] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5.5 h-5.5">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">FastAPI</span>
+            </div>
+
+            <!-- PostgreSQL -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.75 0.15 195);
+              --glow-radial-color: oklch(0.75 0.15 195 / 12%);
+              --glow-border-color: oklch(0.75 0.15 195 / 25%);
+              --glow-shadow-color: oklch(0.75 0.15 195 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#336791] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5.5 h-5.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">PostgreSQL</span>
+            </div>
+
+            <!-- Redis -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.55 0.22 25);
+              --glow-radial-color: oklch(0.55 0.22 25 / 12%);
+              --glow-border-color: oklch(0.55 0.22 25 / 25%);
+              --glow-shadow-color: oklch(0.55 0.22 25 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#D82C20] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2c-4.42 0-8 1.79-8 4v3c0 2.21 3.58 4 8 4s8-1.79 8-4V6c0-2.21-3.58-4-8-4zm0 2c3.87 0 6 1.34 6 2s-2.13 2-6 2-6-1.34-6-2 2.13-2 6-2zm0 6c-3.87 0-6-1.34-6-2v1.5c0 .66 2.13 2 6 2s6-1.34 6-2V8c0 .66-2.13 2-6 2zm0 4.5c-3.87 0-6-1.34-6-2V13c0 .66 2.13 2 6 2s6-1.34 6-2v-1.5c0 .66-2.13 2-6 2z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Redis</span>
+            </div>
+
+            <!-- Docker -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.75 0.15 195);
+              --glow-radial-color: oklch(0.75 0.15 195 / 12%);
+              --glow-border-color: oklch(0.75 0.15 195 / 25%);
+              --glow-shadow-color: oklch(0.75 0.15 195 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#2496ED] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M13.983 8.871h-1.993v1.981h1.993v-1.981zm-2.894 0h-1.993v1.981h1.993v-1.981zm-2.89 0h-1.993v1.981h1.993v-1.981zm-2.89 0H3.32v1.981h1.993v-1.981zm-2.89 0H.43v1.981H2.42v-1.981zm2.89-2.873h-1.993V8.01H5.31V5.998zm2.89 0H6.208V8.01H8.2V5.998zm2.89 0H9.098V8.01H11.09V5.998zm3.32 0h-1.993V8.01h1.993V5.998zm.43 5.753h-1.993v1.981h1.993v-1.981zm-2.894 0h-1.993v1.981h1.993v-1.981zm-2.89 0H8.098v1.981H10.09v-1.981zm-2.89 0H5.208v1.981H7.2V11.75zm-2.89 0H2.317v1.981h1.993v-1.981zm21.46-3.873c-.266-.889-.968-1.578-1.802-2.022-.266-.142-.562-.266-.867-.355l-.443.889c.197.067.4.153.585.253.504.276.924.693 1.084 1.2.148.471.05.997-.247 1.408-.344.47-.887.728-1.455.728h-.114c-.03 0-.057-.01-.087-.013l-.538 1.077c.182.028.36.046.543.046h.194c.954 0 1.866-.43 2.456-1.205.492-.647.643-1.464.444-2.338l.247-.497z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Docker</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 4: Automation & Ops -->
+      <div class="premium-glass rounded-2xl p-6 md:p-8 flex flex-col justify-between h-full">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold tracking-tight title-theme">Automation & Ops</h3>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3.5">
+            <!-- n8n -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.78 0.16 85);
+              --glow-radial-color: oklch(0.78 0.16 85 / 12%);
+              --glow-border-color: oklch(0.78 0.16 85 / 25%);
+              --glow-shadow-color: oklch(0.78 0.16 85 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#FF6C37] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5.5 h-5.5">
+                  <path d="M4 12h16M12 4v16" stroke-linecap="round" />
+                  <circle cx="12" cy="12" r="3" fill="currentColor" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">n8n</span>
+            </div>
+
+            <!-- Make -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.55 0.22 25);
+              --glow-radial-color: oklch(0.55 0.22 25 / 12%);
+              --glow-border-color: oklch(0.55 0.22 25 / 25%);
+              --glow-shadow-color: oklch(0.55 0.22 25 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#EA2C7C] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <circle cx="12" cy="6" r="3" />
+                  <circle cx="6" cy="16" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Make</span>
+            </div>
+
+            <!-- Vercel -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: var(--text-title);
+              --glow-radial-color: var(--glow-color-radial);
+              --glow-border-color: var(--glow-color-border);
+              --glow-shadow-color: var(--glow-color-shadow);
+            ">
+              <div class="tool-icon-wrap text-white dark:text-white light:text-black w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2L2 22h20L12 2z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Vercel</span>
+            </div>
+
+            <!-- AWS -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.78 0.16 85);
+              --glow-radial-color: oklch(0.78 0.16 85 / 12%);
+              --glow-border-color: oklch(0.78 0.16 85 / 25%);
+              --glow-shadow-color: oklch(0.78 0.16 85 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#FF9900] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.35 12.19c-.43.51-1 .92-1.7 1.23-.7.31-1.46.47-2.27.47-1.12 0-2.05-.33-2.79-.98-.74-.65-1.12-1.57-1.12-2.75 0-1.15.38-2.06 1.13-2.71.75-.65 1.7-.97 2.85-.97 1.09 0 1.95.29 2.59.88.64.59.96 1.44.96 2.56H10.1c.02.66.21 1.18.57 1.55.36.37.85.56 1.48.56.76 0 1.39-.3 1.88-.91l2.32 1.42z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">AWS</span>
+            </div>
+
+            <!-- GitHub Actions -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: var(--text-title);
+              --glow-radial-color: var(--glow-color-radial);
+              --glow-border-color: var(--glow-color-border);
+              --glow-shadow-color: var(--glow-color-shadow);
+            ">
+              <div class="tool-icon-wrap text-neutral-300 dark:text-neutral-300 light:text-neutral-800 w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.137 20.197 22 16.453 22 12c0-5.523-4.477-10-10-10z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">GitHub</span>
+            </div>
+
+            <!-- Sentry -->
+            <div class="tool-pill group" style="
+              --glow-brand-color: oklch(0.55 0.22 25);
+              --glow-radial-color: oklch(0.55 0.22 25 / 12%);
+              --glow-border-color: oklch(0.55 0.22 25 / 25%);
+              --glow-shadow-color: oklch(0.55 0.22 25 / 8%);
+            ">
+              <div class="tool-icon-wrap text-[#362D59] w-6 h-6">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5.5 h-5.5">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15.5h-2v-2h2v2zm0-4.5h-2V7h2v6z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight">Sentry</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="text-center mt-16 text-xs muted-theme">
+    THE ABOVE MINDSET AI Studio © 2026. Custom proof block generated by Antigravity.
+  </footer>
+
+  <script>
+    // Theme Toggle Handler
+    const themeBtn = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('theme-sun');
+    const moonIcon = document.getElementById('theme-moon');
+    const htmlEl = document.documentElement;
+
+    function updateIcons() {
+      if (htmlEl.classList.contains('dark')) {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      }
+    }
+
+    themeBtn.addEventListener('click', () => {
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        localStorage.setItem('tam-theme', 'light');
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        localStorage.setItem('tam-theme', 'dark');
+      }
+      updateIcons();
+    });
+
+    // Check system preference on load if nothing in storage
+    const storedTheme = localStorage.getItem('tam-theme');
+    if (storedTheme) {
+      htmlEl.className = storedTheme;
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      htmlEl.className = 'light';
+    }
+    updateIcons();
+
+    // Performant cursor-reactive spotlight logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const pills = document.querySelectorAll('.tool-pill');
+      
+      pills.forEach(pill => {
+        const updateCoordinates = (e) => {
+          const rect = pill.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          pill.style.setProperty('--mouse-x', `${x}px`);
+          pill.style.setProperty('--mouse-y', `${y}px`);
+        };
+
+        pill.addEventListener('mouseenter', () => {
+          pill.addEventListener('mousemove', updateCoordinates, { passive: true });
+        });
+
+        pill.addEventListener('mouseleave', () => {
+          pill.removeEventListener('mousemove', updateCoordinates);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -27,7 +27,7 @@ export function GlassCard({
       className={cn(
         "relative rounded-2xl p-6 transition-all duration-500",
         variants[variant],
-        hover && "hover:scale-[1.02] hover:border-white/15",
+        hover && "hover:scale-[1.02] hover:border-foreground/10",
         variant === "cyan" && hover && "hover:glow-cyan",
         className
       )}

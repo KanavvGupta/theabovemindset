@@ -12,7 +12,7 @@ const footerLinks = [
 const contactLinks = [
   { label: "Email", href: "mailto:venture@theabovemindset.in" },
   { label: "Phone", href: "tel:+919266550918" },
-  { label: "WhatsApp", href: "https://wa.me/918076056534" },
+  { label: "WhatsApp", href: "https://wa.me/918796521814" },
   { label: "Discord", href: "https://discord.com/users/1251458883919151246" },
 ];
 
@@ -90,7 +90,7 @@ export default function Footer() {
             reserved.
           </p>
           <p className="text-xs text-muted-foreground/40">
-            New Delhi, India — Working Globally
+            New Delhi, India — Serving India (Global expansions coming soon)
           </p>
         </div>
       </div>

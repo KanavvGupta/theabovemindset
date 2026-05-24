@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono, Anton } from "next/font/google";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import "./globals.css";
 
@@ -12,6 +11,13 @@ const inter = Inter({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const anton = Anton({
+  weight: "400",
+  variable: "--font-anton",
   subsets: ["latin"],
   display: "swap",
 });
@@ -61,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} dark antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${anton.variable} dark antialiased`}
       suppressHydrationWarning
     >
       <head>

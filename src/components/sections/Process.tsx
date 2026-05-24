@@ -9,39 +9,44 @@ gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   {
-    number: "01",
-    title: "Discovery & Strategy",
+    number: "STAGE 01",
+    badge: "Foundation",
+    title: "Technical & Operational Audit",
     description:
-      "We start with a deep-dive into your business, operations, and goals. No generic questionnaires — we map your actual workflows and pinpoint where AI creates the most leverage.",
-    duration: "1–2 weeks",
+      "Strategy isn't about slide decks; it's about mapping your technical realities. We audit your existing data pipes, locate operations bottlenecks, and define the exact scope that moves the needle.",
+    colorClass: "bg-tam-cyan/10 text-tam-cyan border-tam-cyan/20",
   },
   {
-    number: "02",
-    title: "Architecture & Design",
+    number: "STAGE 02",
+    badge: "System Design",
+    title: "Architecture & Blueprinting",
     description:
-      "System architecture, data flow diagrams, prompt engineering strategy, and UI/UX design. We prototype the critical path first, validating feasibility before building anything at scale.",
-    duration: "1–2 weeks",
+      "We outline the technical blueprint. This means detailed data schemas, prompt strategies, model selection matrices, and modular service diagrams. We design it to scale, not shatter.",
+    colorClass: "bg-tam-cyan/10 text-tam-cyan border-tam-cyan/20",
   },
   {
-    number: "03",
-    title: "Build & Integrate",
+    number: "STAGE 03",
+    badge: "Build Sprint",
+    title: "Modular Development Sprints",
     description:
-      "Modular development sprints. Agents, APIs, frontends, and automations are built in parallel tracks. Continuous integration with your existing stack. Weekly demos, no surprises.",
-    duration: "3–6 weeks",
+      "Pure execution in modular tracks. While the backend engineers wire model endpoints and vector stores, frontend developers craft premium glass interfaces. We demo every Friday so you know exactly where we stand.",
+    colorClass: "bg-tam-amber/10 text-tam-amber border-tam-amber/20",
   },
   {
-    number: "04",
-    title: "Test & Harden",
+    number: "STAGE 04",
+    badge: "Hardening",
+    title: "Adversarial Testing & Safety",
     description:
-      "Adversarial testing, edge-case handling, prompt injection defence, load testing, and UX refinement. We don't ship until it handles the weird stuff gracefully.",
-    duration: "1–2 weeks",
+      "Putting the build through extreme trials. We run model evaluation suites, stress-test API latency, patch prompt-injection vectors, and harden critical edge cases. If it fails here, it doesn't ship.",
+    colorClass: "bg-tam-cyan/10 text-tam-cyan border-tam-cyan/20",
   },
   {
-    number: "05",
-    title: "Deploy & Evolve",
+    number: "STAGE 05",
+    badge: "Launch Support",
+    title: "Production & Telemetry Tuning",
     description:
-      "Production deployment with monitoring, analytics, and feedback loops baked in. Post-launch, we tune agent behaviour, optimize costs, and iterate based on real usage data.",
-    duration: "Ongoing",
+      "Seamless transition into production. We configure automated cost-guardrails, deploy live latency telemetry, and establish feedback loops that refine agent performance based on actual user interactions.",
+    colorClass: "bg-tam-cyan/10 text-tam-cyan border-tam-cyan/20",
   },
 ];
 
@@ -73,7 +78,7 @@ export default function Process() {
         {
           x: 0,
           opacity: 1,
-          stagger: 0.2,
+          stagger: 0.15,
           duration: 0.7,
           ease: "power3.out",
           scrollTrigger: {
@@ -91,43 +96,139 @@ export default function Process() {
     <section
       ref={sectionRef}
       id="process"
-      className="relative section-y section-padding"
+      className="relative section-y section-padding overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           badge="Process"
           title="How we"
           highlight="operate."
-          description="A structured, transparent process refined over dozens of engagements. From first call to production in weeks, not months."
+          description="Our engineered delivery framework. We strip away agency bloat and deliver robust production solutions through five rigorous stages."
+          align="center"
         />
 
-        <div className="process-timeline relative max-w-3xl">
-          {/* Vertical timeline line */}
-          <div className="absolute left-[18px] md:left-[22px] top-0 bottom-0 w-[2px] bg-white/5">
-            <div className="process-line absolute inset-0 bg-gradient-to-b from-tam-cyan via-tam-cyan/50 to-tam-amber origin-top" />
+        {/* Global style overrides for the Process section */}
+        <style jsx global>{`
+          .dark {
+            --dot-bg: oklch(0.08 0.008 260);
+          }
+          .light {
+            --dot-bg: oklch(0.97 0.006 220);
+          }
+
+          /* Glass Cards for steps */
+          .process-glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(24px) saturate(1.8);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+              0 4px 30px rgba(0, 0, 0, 0.01),
+              inset 0 1px 1px var(--glass-inner-border);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+          }
+
+          .dark .process-glass-card {
+            box-shadow: 
+              0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 1px var(--glass-inner-border);
+          }
+
+          .process-glass-card:hover {
+            transform: translateY(-2px);
+          }
+          
+          .dark .process-glass-card:hover {
+            border-color: oklch(0.75 0.15 195 / 20%);
+            box-shadow: 
+              0 12px 40px oklch(0.75 0.15 195 / 5%),
+              inset 0 1px 1.5px oklch(1 0 0 / 12%);
+          }
+          .light .process-glass-card:hover {
+            border-color: oklch(0.45 0.18 195 / 15%);
+            box-shadow: 
+              0 12px 40px oklch(0.45 0.18 195 / 4%),
+              inset 0 1px 1.5px oklch(1 0 0 / 95%);
+          }
+
+          /* Mathematical alignment vertical line background overrides */
+          .dark .vertical-line-container {
+            background-color: rgba(255, 255, 255, 0.05);
+          }
+          .light .vertical-line-container {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
+
+          /* Interactive connection: hover row lights up the timeline dot & step number */
+          .process-step:hover .timeline-dot {
+            border-color: var(--color-primary);
+            background-color: var(--color-primary);
+            box-shadow: 0 0 10px var(--color-primary-glow);
+            transform: scale(1.25);
+          }
+
+          .process-step:hover .step-num-text {
+            color: var(--color-primary);
+            transform: translateX(2px);
+          }
+
+          .step-num-text {
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+          }
+
+          .title-theme {
+            color: var(--text-title);
+          }
+          .muted-theme {
+            color: var(--text-muted);
+          }
+
+          .timeline-dot {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.3s ease, 
+                        background-color 0.3s ease, 
+                        box-shadow 0.3s ease;
+          }
+        `}</style>
+
+        <div className="process-timeline relative max-w-3xl mx-auto mt-16 md:mt-24">
+          
+          {/* Perfectly mathematically centered timeline line */}
+          <div className="vertical-line-container absolute top-4 bottom-4 left-5 md:left-7 w-[2px] -translate-x-1/2 z-0">
+            <div className="process-line absolute inset-0 bg-gradient-to-b from-tam-cyan via-tam-cyan/40 to-tam-amber origin-top" />
           </div>
 
-          <div className="space-y-12">
-            {steps.map((step, i) => (
-              <div key={step.number} className="process-step relative pl-14 md:pl-16">
-                {/* Dot */}
-                <div className="absolute left-2.5 md:left-3 top-1 w-[14px] h-[14px] rounded-full border-2 border-tam-cyan bg-background z-10" />
+          <div className="space-y-10 md:space-y-12">
+            {steps.map((step) => (
+              <div
+                key={step.number}
+                className="process-step grid grid-cols-[40px_1fr] md:grid-cols-[56px_1fr] gap-6 md:gap-8 items-start relative z-10"
+              >
+                {/* Marker Center */}
+                <div className="flex justify-center items-center h-8 relative">
+                  <div className="timeline-dot w-[14px] h-[14px] rounded-full border-2 border-tam-cyan/40 bg-[var(--dot-bg)] z-10" />
+                </div>
 
-                <div className="flex items-start justify-between gap-4">
+                {/* Content Card */}
+                <div className="process-glass-card p-6 md:p-8 rounded-2xl flex flex-col justify-between">
                   <div>
-                    <span className="text-xs font-mono text-tam-cyan tracking-widest">
-                      {step.number}
-                    </span>
-                    <h3 className="text-xl md:text-2xl font-bold mt-1 mb-3">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                      <span className="step-num-text text-xs font-mono font-semibold text-tam-cyan tracking-wider">
+                        {step.number}
+                      </span>
+                      <span className={`text-[10px] tracking-widest uppercase font-mono border px-2.5 py-0.5 rounded font-bold ${step.colorClass}`}>
+                        {step.badge}
+                      </span>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 title-theme">
                       {step.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+                    <p className="muted-theme leading-relaxed text-sm md:text-base">
                       {step.description}
                     </p>
                   </div>
-                  <span className="shrink-0 text-xs font-mono text-muted-foreground bg-white/5 px-3 py-1 rounded-full mt-1 hidden md:block">
-                    {step.duration}
-                  </span>
                 </div>
               </div>
             ))}

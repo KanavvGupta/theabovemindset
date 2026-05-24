@@ -17,6 +17,7 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
+  --font-anton: var(--font-anton);
 
   /* Shadcn tokens */
   --color-sidebar-ring: var(--sidebar-ring);
@@ -148,7 +149,7 @@
 
 /* ---- Light Mode — "Sunrise / Morning Sky" ---- */
 .light {
-  --background: oklch(0.97 0.006 220);
+  --background: oklch(0.96 0.008 220);
   --foreground: oklch(0.14 0.02 260);
   --card: oklch(0.99 0.002 220);
   --card-foreground: oklch(0.14 0.02 260);
@@ -159,12 +160,12 @@
   --secondary: oklch(0.93 0.008 220);
   --secondary-foreground: oklch(0.20 0.02 260);
   --muted: oklch(0.93 0.008 220);
-  --muted-foreground: oklch(0.40 0.015 260);
+  --muted-foreground: oklch(0.35 0.01 260);
   --accent: oklch(0.52 0.16 85);
   --accent-foreground: oklch(0.14 0.02 260);
   --destructive: oklch(0.48 0.22 25);
-  --border: oklch(0 0 0 / 8%);
-  --input: oklch(0 0 0 / 8%);
+  --border: oklch(0 0 0 / 10%);
+  --input: oklch(0 0 0 / 10%);
   --ring: oklch(0.45 0.18 195);
   --chart-1: oklch(0.45 0.18 195);
   --chart-2: oklch(0.45 0.18 155);
@@ -190,12 +191,16 @@
     @apply bg-background text-foreground;
     font-size: 16px;
     line-height: 1.6;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   html {
     @apply font-sans;
     scroll-behavior: auto;
     /* Lenis handles smooth scroll */
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   h1,
@@ -386,34 +391,44 @@
 
 /* ===== LIGHT MODE OVERRIDES ===== */
 .light .glass {
-  background: oklch(1 0 0 / 60%);
-  backdrop-filter: blur(16px) saturate(1.3);
-  border: 1px solid oklch(0 0 0 / 6%);
-  box-shadow: 0 1px 3px oklch(0 0 0 / 4%), 0 4px 12px oklch(0 0 0 / 2%);
+  background: oklch(1 0 0 / 75%);
+  backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid oklch(0 0 0 / 9%);
+  box-shadow: 
+    0 4px 20px oklch(0 0 0 / 2%),
+    0 1px 3px oklch(0 0 0 / 1%),
+    inset 0 1px 1px oklch(1 0 0 / 95%);
 }
 
 .light .glass-strong {
-  background: oklch(1 0 0 / 78%);
-  backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid oklch(0 0 0 / 8%);
-  box-shadow: 0 2px 6px oklch(0 0 0 / 5%), 0 8px 24px oklch(0 0 0 / 3%);
+  background: oklch(1 0 0 / 84%);
+  backdrop-filter: blur(32px) saturate(1.7);
+  border: 1px solid oklch(0 0 0 / 12%);
+  box-shadow: 
+    0 10px 30px oklch(0 0 0 / 3%),
+    0 2px 6px oklch(0 0 0 / 1%),
+    inset 0 1px 1.5px oklch(1 0 0 / 95%);
 }
 
 .light .glass-cyan {
-  background: oklch(0.45 0.18 195 / 5%);
-  backdrop-filter: blur(16px) saturate(1.3);
-  border: 1px solid oklch(0.45 0.18 195 / 16%);
-  box-shadow: 0 1px 3px oklch(0.45 0.18 195 / 5%);
+  background: oklch(0.45 0.18 195 / 6%);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid oklch(0.45 0.18 195 / 18%);
+  box-shadow: 
+    0 4px 16px oklch(0.45 0.18 195 / 3%),
+    inset 0 1px 1px oklch(1 0 0 / 90%);
 }
 
 .light .glow-cyan {
-  box-shadow: 0 0 16px oklch(0.45 0.18 195 / 10%),
-    0 0 48px oklch(0.45 0.18 195 / 4%);
+  box-shadow: 
+    0 12px 36px oklch(0.45 0.18 195 / 8%),
+    0 4px 12px oklch(0.45 0.18 195 / 3%);
 }
 
 .light .glow-amber {
-  box-shadow: 0 0 16px oklch(0.52 0.16 85 / 10%),
-    0 0 48px oklch(0.52 0.16 85 / 4%);
+  box-shadow: 
+    0 12px 36px oklch(0.52 0.16 85 / 8%),
+    0 4px 12px oklch(0.52 0.16 85 / 3%);
 }
 
 .light .text-gradient-cyan {
@@ -431,7 +446,11 @@
 }
 
 .light .text-glow-cyan {
-  text-shadow: 0 0 24px oklch(0.45 0.18 195 / 20%);
+  text-shadow: 0 0 20px oklch(0.45 0.18 195 / 22%);
+}
+
+.light .text-glow-amber {
+  text-shadow: 0 0 20px oklch(0.52 0.16 85 / 22%);
 }
 
 .light ::-webkit-scrollbar-track {

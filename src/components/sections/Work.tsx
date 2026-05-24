@@ -116,7 +116,7 @@ export default function Work() {
                   <div className="flex items-start justify-between mb-4">
                     <Badge
                       variant="outline"
-                      className="border-white/10 text-muted-foreground text-xs"
+                      className="border-foreground/10 text-muted-foreground text-xs"
                     >
                       {project.category}
                     </Badge>
@@ -146,12 +146,12 @@ export default function Work() {
                   </div>
 
                   {/* Stack */}
-                  <div className="flex items-center gap-2 pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-2 pt-4 border-t border-foreground/5">
                     <span className="text-xs text-muted-foreground mr-1">Built with:</span>
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="text-xs px-2 py-0.5 rounded bg-white/5 text-muted-foreground"
+                        className="text-xs px-2 py-0.5 rounded bg-foreground/5 text-muted-foreground"
                       >
                         {tech}
                       </span>

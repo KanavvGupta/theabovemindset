@@ -106,7 +106,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => scrollTo("#contact")}
-              className="bg-tam-cyan/90 hover:bg-tam-cyan rounded-full px-5 py-2 text-sm font-semibold text-white tracking-wide shadow-lg shadow-tam-cyan/20 hover:shadow-tam-cyan/30 transition-all duration-300 cursor-pointer border border-tam-cyan/30"
+              className="bg-primary text-primary-foreground border border-primary/10 hover:opacity-95 rounded-full px-5 py-2 text-sm font-semibold tracking-wide shadow-md shadow-primary/10 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 cursor-pointer"
             >
               Start a Project
             </button>
@@ -152,7 +152,7 @@ export default function Navbar() {
             ))}
             <motion.button
               onClick={() => scrollTo("#contact")}
-              className="bg-tam-cyan/90 hover:bg-tam-cyan rounded-full px-8 py-3 text-lg font-semibold text-white tracking-wide mt-4 cursor-pointer shadow-lg shadow-tam-cyan/20 border border-tam-cyan/30"
+              className="bg-primary text-primary-foreground border border-primary/10 hover:opacity-95 rounded-full px-8 py-3 text-lg font-semibold tracking-wide mt-4 cursor-pointer shadow-md shadow-primary/10 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navItems.length * 0.08 }}
