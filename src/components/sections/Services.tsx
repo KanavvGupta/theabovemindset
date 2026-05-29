@@ -75,17 +75,7 @@ const serviceSpotlights = [
 // Video source — single asset cached by browser, recolored per card via CSS filters
 const MOTION_VIDEO_SRC = "/videos/wave-motion.mp4";
 
-// Harmonized color theory accent highlights per card index (dark in light mode, light in dark mode)
-const highlightColors = [
-  "text-tam-cyan-dark dark:text-tam-cyan",                  // 0. Agentic AI (cyan)
-  "text-blue-700 dark:text-blue-300",                       // 1. AI-Native Websites (blue)
-  "text-indigo-700 dark:text-indigo-300",                   // 2. Conversational AI (indigo)
-  "text-orange-700 dark:text-orange-300",                   // 3. Workflow Automation (orange)
-  "text-purple-700 dark:text-purple-300",                   // 4. AI Strategy (purple)
-  "text-cyan-700 dark:text-cyan-300",                       // 5. 3D Web (cyan)
-  "text-emerald-700 dark:text-tam-green",                   // 6. WhatsApp (green)
-  "text-amber-800 dark:text-amber-300",                     // 7. Growth Systems (amber)
-];
+
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -148,10 +138,9 @@ export default function Services() {
     };
   }, []);
 
-  // Parses markdown-like **bolding** to apply specific color accents and subtle glow
+  // Parses markdown-like **bolding** to apply cohesive brand accent and subtle glow
   const renderHighlightedText = (text: string, index: number, isHovered: boolean) => {
     const parts = text.split(/(\*\*.*?\*\*)/g);
-    const highlightColorClass = highlightColors[index] || "text-tam-cyan-dark dark:text-tam-cyan";
 
     return parts.map((part, idx) => {
       if (part.startsWith("**") && part.endsWith("**")) {
@@ -160,7 +149,7 @@ export default function Services() {
           <strong
             key={idx}
             className={`font-bold transition-all duration-500 ${
-              isHovered ? `${highlightColorClass} service-highlight` : "text-inherit"
+              isHovered ? "service-highlight" : "text-inherit"
             }`}
           >
             {cleanText}

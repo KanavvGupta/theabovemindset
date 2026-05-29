@@ -9,28 +9,7 @@ import { ChapterContent } from "./ChapterContent";
 import { PromptHelper } from "./PromptHelper";
 import type { ServiceData } from "@/data/services";
 
-const getHighlightColor = (slug: string) => {
-  switch (slug) {
-    case "agentic-ai-systems":
-      return "text-tam-cyan-dark dark:text-tam-cyan";
-    case "ai-native-websites":
-      return "text-blue-700 dark:text-blue-300";
-    case "conversational-ai-chatbots":
-      return "text-indigo-700 dark:text-indigo-300";
-    case "workflow-automation":
-      return "text-orange-700 dark:text-orange-300";
-    case "ai-strategy-consulting":
-      return "text-purple-700 dark:text-purple-300";
-    case "3d-immersive-experiences":
-      return "text-cyan-700 dark:text-cyan-300";
-    case "whatsapp-automation":
-      return "text-emerald-700 dark:text-tam-green";
-    case "growth-systems":
-      return "text-amber-800 dark:text-amber-300";
-    default:
-      return "text-tam-cyan-dark dark:text-tam-cyan";
-  }
-};
+
 
 interface ServiceLibraryProps {
   service: ServiceData;
@@ -40,10 +19,9 @@ export function ServiceLibrary({ service }: ServiceLibraryProps) {
   const [activeChapter, setActiveChapter] = useState(service.chapters[0].id);
   const currentChapter = service.chapters.find((c) => c.id === activeChapter) ?? service.chapters[0];
 
-  // Parses markdown-like **bolding** to apply specific color accents and subtle glow
+  // Parses markdown-like **bolding** to apply cohesive brand accent and subtle glow
   const renderHighlightedText = (text: string, slug: string) => {
     const parts = text.split(/(\*\*.*?\*\*)/g);
-    const highlightColorClass = getHighlightColor(slug);
 
     return parts.map((part, idx) => {
       if (part.startsWith("**") && part.endsWith("**")) {
@@ -51,7 +29,7 @@ export function ServiceLibrary({ service }: ServiceLibraryProps) {
         return (
           <strong
             key={idx}
-            className={`font-bold transition-all duration-500 ${highlightColorClass} subpage-highlight`}
+            className="font-bold transition-all duration-500 subpage-highlight"
           >
             {cleanText}
           </strong>
