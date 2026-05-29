@@ -75,6 +75,18 @@ const serviceSpotlights = [
 // Video source — single asset cached by browser, recolored per card via CSS filters
 const MOTION_VIDEO_SRC = "/videos/wave-motion.mp4";
 
+// Harmonized color theory accent highlights per card index
+const highlightColors = [
+  "text-tam-cyan",                        // 0. Agentic AI (cyan)
+  "text-blue-400 dark:text-blue-300",     // 1. AI-Native Websites (blue)
+  "text-indigo-400 dark:text-indigo-300", // 2. Conversational AI (indigo)
+  "text-orange-400 dark:text-orange-300", // 3. Workflow Automation (orange)
+  "text-purple-400 dark:text-purple-300", // 4. AI Strategy (purple)
+  "text-cyan-400 dark:text-cyan-300",     // 5. 3D Web (cyan)
+  "text-tam-green",                       // 6. WhatsApp (green)
+  "text-amber-400 dark:text-amber-300",   // 7. Growth Systems (amber)
+];
+
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -85,6 +97,21 @@ export default function Services() {
   const setVideoRef = useCallback((el: HTMLVideoElement | null, index: number) => {
     videoRefs.current[index] = el;
   }, []);
+
+  // Performance-focused play/pause handler: only runs hovered video at 60 FPS
+  useEffect(() => {
+    videoRefs.current.forEach((video, idx) => {
+      if (!video) return;
+      if (hoveredIdx === idx) {
+        video.playbackRate = 0.25; // Slowed down for ultra-smooth premium drift without lag
+        video.play().catch(() => {
+          // Autoplay blocked — degrade gracefully
+        });
+      } else {
+        video.pause();
+      }
+    });
+  }, [hoveredIdx]);
 
   useEffect(() => {
     // Dynamic theme observer to update light mode states
@@ -115,42 +142,37 @@ export default function Services() {
       );
     }, sectionRef);
 
-    // Slow down video playback to 40% speed for premium feel
-    // Use IntersectionObserver to lazy-play videos only when visible
-    const videoObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target as HTMLVideoElement;
-          if (entry.isIntersecting) {
-            video.playbackRate = 0.4;
-            video.play().catch(() => {
-              // Autoplay blocked — degrade gracefully
-            });
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    // Observe all video elements after a short delay for DOM readiness
-    const timer = setTimeout(() => {
-      videoRefs.current.forEach((video) => {
-        if (video) {
-          video.playbackRate = 0.4;
-          videoObserver.observe(video);
-        }
-      });
-    }, 100);
-
     return () => {
       observer.disconnect();
       ctx.revert();
-      clearTimeout(timer);
-      videoObserver.disconnect();
     };
   }, []);
+
+  // Parses markdown-like **bolding** to apply specific color accents and subtle glow
+  const renderHighlightedText = (text: string, index: number, isHovered: boolean) => {
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    const highlightColorClass = highlightColors[index] || "text-tam-cyan";
+
+    return parts.map((part, idx) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        const cleanText = part.slice(2, -2);
+        return (
+          <strong
+            key={idx}
+            className={`font-bold transition-all duration-500 ${
+              isHovered ? `${highlightColorClass}` : "text-white dark:text-white"
+            }`}
+            style={{
+              textShadow: isHovered ? "0 0 8px currentColor" : "none",
+            }}
+          >
+            {cleanText}
+          </strong>
+        );
+      }
+      return part;
+    });
+  };
 
   // Performance-optimized cursor coordinate tracker
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
@@ -220,7 +242,6 @@ export default function Services() {
                     ref={(el) => setVideoRef(el, i)}
                     className={`service-motion-video service-motion-${i} z-[2]`}
                     src={MOTION_VIDEO_SRC}
-                    autoPlay
                     muted
                     loop
                     playsInline
@@ -301,12 +322,12 @@ export default function Services() {
                         {service.title}
                       </h3>
                       <p
-                        className="text-sm leading-relaxed transition-colors duration-500"
+                        className="text-sm leading-relaxed transition-colors duration-500 text-muted-foreground"
                         style={{
                           color: hoveredIdx === i ? "oklch(0.85 0 0)" : undefined,
                         }}
                       >
-                        {service.shortDescription}
+                        {renderHighlightedText(service.shortDescription, i, hoveredIdx === i)}
                       </p>
                     </div>
 

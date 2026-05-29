@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono, Anton } from "next/font/google";
+import { Inter, Geist_Mono, Anton, League_Spartan } from "next/font/google";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import "./globals.css";
 
@@ -19,6 +19,12 @@ const anton = Anton({
   weight: "400",
   variable: "--font-anton",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const leagueSpartan = League_Spartan({
+  subsets: ["latin"],
+  variable: "--font-league-spartan",
   display: "swap",
 });
 
@@ -67,7 +73,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} ${anton.variable} dark antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${anton.variable} ${leagueSpartan.variable} dark antialiased`}
       suppressHydrationWarning
     >
       <head>

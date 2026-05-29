@@ -27,7 +27,7 @@ export const services: ServiceData[] = [
     icon: "🤖",
     title: "Agentic AI Systems",
     shortDescription:
-      "Autonomous agent architectures that reason, plan, and execute multi-step workflows. Built on modern LLM orchestration frameworks with tool-calling, memory, and retrieval-augmented generation.",
+      "Autonomous agent architectures that **reason, plan, and execute** multi-step workflows. Built on modern LLM orchestration frameworks with **tool-calling, memory, and RAG**.",
     tags: ["LangChain", "CrewAI", "AutoGen"],
     featured: true,
     gradient: "from-tam-cyan/20 via-tam-cyan/5 to-transparent",
@@ -106,7 +106,7 @@ export const services: ServiceData[] = [
     icon: "🌐",
     title: "AI-Native Websites",
     shortDescription:
-      "Websites that think. Conversational interfaces, dynamic personalization, intelligent search, and AI-powered content generation built into the core experience.",
+      "Websites that **think and adapt**. Conversational interfaces, **dynamic personalization**, intelligent search, and AI-powered content generation built into the core experience.",
     tags: ["Next.js", "React", "Three.js"],
     featured: false,
     gradient: "from-blue-500/20 via-blue-500/5 to-transparent",
@@ -153,7 +153,7 @@ export const services: ServiceData[] = [
     icon: "💬",
     title: "Conversational AI & Chatbots",
     shortDescription:
-      "Context-aware chatbots with natural dialogue, multi-turn reasoning, and seamless handoffs. Custom-trained on your knowledge base and brand voice.",
+      "Context-aware chatbots with **natural dialogue**, multi-turn reasoning, and seamless handoffs. **Custom-trained** on your knowledge base and brand voice.",
     tags: ["GPT", "Claude", "RAG"],
     featured: false,
     gradient: "from-purple-500/20 via-purple-500/5 to-transparent",
@@ -194,7 +194,7 @@ export const services: ServiceData[] = [
     icon: "⚡",
     title: "Workflow Automation",
     shortDescription:
-      "End-to-end automation of business processes using AI decision engines. From lead qualification to content pipelines, we eliminate manual bottlenecks.",
+      "End-to-end automation of business processes using **AI decision engines**. From lead qualification to content pipelines, we **eliminate manual bottlenecks**.",
     tags: ["n8n", "Make", "Custom APIs"],
     featured: false,
     gradient: "from-green-500/20 via-green-500/5 to-transparent",
@@ -234,7 +234,7 @@ export const services: ServiceData[] = [
     icon: "🧠",
     title: "AI Strategy & Consulting",
     shortDescription:
-      "Map your operations, identify high-impact AI opportunities, and build a roadmap from proof-of-concept to production. No fluff — just actionable architecture.",
+      "Map your operations, identify **high-impact AI opportunities**, and build a roadmap from **proof-of-concept to production** with actionable architecture.",
     tags: ["Assessment", "Roadmap", "ROI"],
     featured: false,
     gradient: "from-tam-amber/20 via-tam-amber/5 to-transparent",
@@ -274,7 +274,7 @@ export const services: ServiceData[] = [
     icon: "🔮",
     title: "3D & Immersive Experiences",
     shortDescription:
-      "WebGL-powered 3D product showcases, data visualizations, and immersive scroll experiences that create lasting impressions and elevate brand perception.",
+      "WebGL-powered **3D product showcases**, data visualizations, and **immersive scroll experiences** that create lasting impressions and elevate brand perception.",
     tags: ["Three.js", "GSAP", "WebGL"],
     featured: false,
     gradient: "from-pink-500/20 via-pink-500/5 to-transparent",
@@ -316,7 +316,7 @@ export const services: ServiceData[] = [
     icon: "📲",
     title: "WhatsApp Automation",
     shortDescription:
-      "Scale customer interactions and sales channels directly inside WhatsApp. Complete broadcast campaigns, automated catalog selling, and 24/7 client triage built on official Meta APIs.",
+      "Scale customer interactions and sales channels directly inside WhatsApp. Complete **broadcast campaigns**, automated catalog selling, and **24/7 client triage**.",
     tags: ["Meta API", "Flows", "Broadcasting"],
     featured: false,
     gradient: "from-tam-green/20 via-tam-green/5 to-transparent",
@@ -388,7 +388,7 @@ export const services: ServiceData[] = [
     icon: "📈",
     title: "Growth Systems",
     shortDescription:
-      "High-performance marketing infrastructure that turns traffic into revenue. Lead capture systems, dynamic personalization, automated email sequences, and programmatic content engines.",
+      "High-performance marketing infrastructure that **turns traffic into revenue**. Lead capture systems, dynamic personalization, and **automated email sequences**.",
     tags: ["HubSpot", "Zapier", "Analytics"],
     featured: false,
     gradient: "from-tam-amber/20 via-tam-amber/5 to-transparent",

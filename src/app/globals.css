@@ -18,6 +18,7 @@
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --font-anton: var(--font-anton);
+  --font-league-spartan: var(--font-league-spartan);
 
   /* Shadcn tokens */
   --color-sidebar-ring: var(--sidebar-ring);
@@ -209,7 +210,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-sans);
+    font-family: var(--font-league-spartan), var(--font-sans);
     font-weight: 700;
     line-height: 1.1;
   }
@@ -319,7 +320,7 @@
   transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               filter 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: opacity, filter;
+  will-change: transform, opacity;
   animation: service-motion-drift 24s ease-in-out infinite alternate;
   transform: scale(1.15);
 }
