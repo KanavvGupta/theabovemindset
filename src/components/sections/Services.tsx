@@ -228,10 +228,11 @@ export default function Services() {
                     ref={(el) => setVideoRef(el, i)}
                     className={`service-motion-video service-motion-${i} z-[2]`}
                     src={MOTION_VIDEO_SRC}
+                    autoPlay
                     muted
                     loop
                     playsInline
-                    preload="metadata"
+                    preload="auto"
                     aria-hidden="true"
                   />
 
