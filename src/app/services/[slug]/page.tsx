@@ -17,12 +17,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) return {};
+  const cleanDescription = service.shortDescription.replace(/\*\*/g, "");
   return {
     title: `${service.title} — The Above Mindset`,
-    description: service.shortDescription,
+    description: cleanDescription,
     openGraph: {
       title: `${service.title} — The Above Mindset`,
-      description: service.shortDescription,
+      description: cleanDescription,
       type: "website",
       siteName: "The Above Mindset",
     },
