@@ -311,6 +311,150 @@ export const services: ServiceData[] = [
       ]},
     ],
   },
+  {
+    slug: "whatsapp-automation",
+    icon: "📲",
+    title: "WhatsApp Automation",
+    shortDescription:
+      "Scale customer interactions and sales channels directly inside WhatsApp. Complete broadcast campaigns, automated catalog selling, and 24/7 client triage built on official Meta APIs.",
+    tags: ["Meta API", "Flows", "Broadcasting"],
+    featured: false,
+    gradient: "from-tam-green/20 via-tam-green/5 to-transparent",
+    chapters: [
+      {
+        id: "overview",
+        title: "Overview",
+        subtopics: [
+          { title: "WhatsApp as a growth engine", intro: "Turn the world's most popular messaging app into an automated high-performance channel. Reach customers instantly with a 98% open rate, answer queries 24/7, and close deals directly in chat.", tags: ["Engagement", "Meta"] },
+          { title: "Direct Conversational Commerce", intro: "Allow your customers to search catalogs, consult about products, and finalize checkouts without leaving the conversation interface.", tags: ["Selling", "Commerce"] },
+          { title: "Official compliance", intro: "We build strictly on official Meta APIs, ensuring high daily limits, verified Business tags, green tick compatibility, and 0% risk of account bans.", tags: ["Meta", "Official"] },
+        ],
+      },
+      {
+        id: "who-this-is-for",
+        title: "Who this is for",
+        subtopics: [
+          { title: "E-Commerce brands", intro: "Instantly send transactional messages, order receipts, shipping tracking, and cart abandonment nudges directly to user screens.", tags: ["Ecomm"] },
+          { title: "Local & Booking-based services", intro: "Automate appointment scheduling, custom reminders, cancellations, and feedback requests with zero human friction.", tags: ["Schedules"] },
+          { title: "High-volume support teams", intro: "Deflect up to 70% of inbound chat load with automated FAQ triage and intelligent, context-aware handoff rules.", tags: ["Support"] },
+        ],
+      },
+      {
+        id: "use-cases",
+        title: "Example use cases",
+        subtopics: [
+          { title: "Interactive catalog checkout", intro: "The user triggers the chat, browses a fully formatted rich list catalog, asks custom questions, selects items, and pays — all in a single thread.", tags: ["Commerce", "Flows"] },
+          { title: "Automated booking coordinator", intro: "An organic lead messages your number, the system automatically checks calendar availability, prompts for detail, schedules, and alerts your team.", tags: ["Booking"] },
+          { title: "Bulk broadcasts with smart filters", intro: "Deliver seasonal sales campaigns, VIP event invites, or critical alerts to filtered contact cohorts with automated feedback handling.", tags: ["Broadcasting"] },
+        ],
+      },
+      {
+        id: "deliverables",
+        title: "What's included",
+        subtopics: [
+          { title: "Official API setup", intro: "End-to-end Meta Business Manager configuration, phone number verification, and template approvals." },
+          { title: "Custom conversation flows", intro: "Bespoke structural flow charts, interactive buttons, list selectors, and automated AI reply routing." },
+          { title: "CRM & ERP synchronization", intro: "Direct webhooks connecting WhatsApp triggers into HubSpot, Salesforce, Shopify, or custom backends." },
+        ],
+      },
+      {
+        id: "stack",
+        title: "Implementation & stack",
+        subtopics: [
+          { title: "Meta Cloud API", intro: "The secure official foundation for low-latency high-volume messaging.", tags: ["Meta"] },
+          { title: "n8n / custom webhooks", intro: "Robust background workflow engine that handles retries, delays, and complex API translations.", tags: ["n8n", "Webhooks"] },
+          { title: "Evolution API", intro: "Enterprise-grade containerized routing for flexible third-party system integrations.", tags: ["Evolution"] },
+        ],
+      },
+      {
+        id: "timeline",
+        title: "Timeline",
+        subtopics: [
+          { title: "2–3 weeks", intro: "From business verification and Meta approval through complete design, custom flow coding, and live testing." },
+        ],
+      },
+      {
+        id: "faqs",
+        title: "FAQs",
+        subtopics: [
+          { title: "Are there extra messaging costs?", intro: "Meta charges a small fee per 24-hour conversation window (category-based, e.g., utility, marketing). We optimize template types to minimize these costs." },
+          { title: "Can my team still chat manually?", intro: "Yes. We integrate live-chat software (like Chatwoot) so your human agents can step in whenever a user requests human support." },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "growth-systems",
+    icon: "📈",
+    title: "Growth Systems",
+    shortDescription:
+      "High-performance marketing infrastructure that turns traffic into revenue. Lead capture systems, dynamic personalization, automated email sequences, and programmatic content engines.",
+    tags: ["HubSpot", "Zapier", "Analytics"],
+    featured: false,
+    gradient: "from-tam-amber/20 via-tam-amber/5 to-transparent",
+    chapters: [
+      {
+        id: "overview",
+        title: "Overview",
+        subtopics: [
+          { title: "Systematize your marketing", intro: "Stop guessing. We engineer highly predictable acquisition funnels that capture, enrich, and nurture your traffic automatically.", tags: ["Funnels", "CRO"] },
+          { title: "Personalized experiences", intro: "Deliver dynamic landing pages and custom messaging customized exactly to your visitor's industry, traffic source, or past actions.", tags: ["UX"] },
+          { title: "Clean data pipeline", intro: "Connect your ads, website behavior, CRM, and analytics to gain absolute clarity on what drives actual dollar ROI.", tags: ["Analytics", "Data"] },
+        ],
+      },
+      {
+        id: "who-this-is-for",
+        title: "Who this is for",
+        subtopics: [
+          { title: "B2B SaaS companies", intro: "Nurture cold trials, surface warm product qualified leads (PQLs), and reduce onboarding dropoffs.", tags: ["SaaS"] },
+          { title: "High-ticket service firms", intro: "Enrich incoming inbound leads automatically, score priority accounts, and alert sales representatives instantly.", tags: ["Sales"] },
+          { title: "Data-driven marketing teams", intro: "Replace chaotic manual CSV reports with clean, automated cross-channel marketing dashboards.", tags: ["Operations"] },
+        ],
+      },
+      {
+        id: "use-cases",
+        title: "Example use cases",
+        subtopics: [
+          { title: "Programmatic search landing pages", intro: "Instantly display specific copy, case studies, and callouts depending on the keyword search term the visitor came from.", tags: ["SEO", "CRO"] },
+          { title: "Instant lead enrichment funnel", intro: "Visitor submits a 3-field form → backend enriches it with Apollo/Clearbit → scores fit → triggers target HubSpot sequence.", tags: ["Enrichment"] },
+          { title: "High-value intent alerting", intro: "Get immediate Slack/Teams alerts with full context when a target enterprise account spends 2+ minutes on your pricing section.", tags: ["ABM", "Sales"] },
+        ],
+      },
+      {
+        id: "deliverables",
+        title: "What's included",
+        subtopics: [
+          { title: "Growth mapping & strategy", intro: "A precise, multi-stage blueprint detailing customer journeys, logic Gates, and data sync points." },
+          { title: "CRM implementation", intro: "Complete pipeline creation, deal stages, automated triggers, and custom data schema configuration." },
+          { title: "Advanced campaign workflows", intro: "Behavior-based email nurturing, drip structures, SMS triggers, and dynamic list management." },
+        ],
+      },
+      {
+        id: "stack",
+        title: "Implementation & stack",
+        subtopics: [
+          { title: "HubSpot / ActiveCampaign", intro: "Industry-standard suites for CRM, lead management, and email automation workflows.", tags: ["HubSpot", "CRM"] },
+          { title: "Zapier / Make.com", intro: "The glue connecting web forms, email tools, databases, and alerting platforms.", tags: ["Integration"] },
+          { title: "Apollo / Clearbit APIs", intro: "Real-time lookups to retrieve deep firmographic details about target clients instantly.", tags: ["Enrichment"] },
+        ],
+      },
+      {
+        id: "timeline",
+        title: "Timeline",
+        subtopics: [
+          { title: "3–5 weeks", intro: "From funnel design mapping to API keys integration, email copy writing, automation tests, and launch." },
+        ],
+      },
+      {
+        id: "faqs",
+        title: "FAQs",
+        subtopics: [
+          { title: "Can you optimize our existing CRM?", intro: "Yes. We audit and refactor existing setups, cleaning up mess, redundant integrations, and old pipelines so your data stays neat." },
+          { title: "Do you write marketing copy?", intro: "We draft conversion-focused email templates and onboarding emails aligned with your brand guidelines and verified through UX testing." },
+        ],
+      },
+    ],
+  },
 ];
 
 export function getServiceBySlug(slug: string): ServiceData | undefined {

@@ -304,6 +304,223 @@
   }
 }
 
+/* ===== SERVICE MOTION VIDEO LAYERS ===== */
+
+/* Base motion layer — shared by all cards */
+.service-motion-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.12;
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, filter;
+  animation: service-motion-drift 24s ease-in-out infinite alternate;
+  transform: scale(1.15);
+}
+
+/* Hover — BLAST the video to near-full brightness */
+.group:hover .service-motion-video {
+  opacity: 0.82;
+  transform: scale(1.25);
+}
+
+/* Gradient fade mask — only protects text zone at bottom */
+.service-motion-mask {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    oklch(0.08 0.008 260 / 15%) 30%,
+    oklch(0.08 0.008 260 / 60%) 70%,
+    oklch(0.08 0.008 260 / 85%) 100%
+  );
+  transition: background 0.7s ease;
+}
+
+/* On hover — thin the mask so video blazes through, keep bottom protected */
+.group:hover .service-motion-mask {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    oklch(0.03 0.005 260 / 10%) 25%,
+    oklch(0.03 0.005 260 / 45%) 60%,
+    oklch(0.03 0.005 260 / 80%) 100%
+  );
+}
+
+/* Slow organic drift — makes the video feel alive, not static */
+@keyframes service-motion-drift {
+  0% {
+    transform: scale(1.15) translate(0%, 0%);
+  }
+  25% {
+    transform: scale(1.18) translate(-2%, 1.2%);
+  }
+  50% {
+    transform: scale(1.13) translate(1.5%, -0.8%);
+  }
+  75% {
+    transform: scale(1.17) translate(-0.8%, 1.5%);
+  }
+  100% {
+    transform: scale(1.16) translate(0.5%, -0.5%);
+  }
+}
+
+/* =============================================
+   PER-SERVICE COLOR FILTERS
+   Each card gets a drastically different hue,
+   saturation, and brightness combo so no two
+   cards feel the same.
+   ============================================= */
+
+/* 0. Agentic AI Systems — ELECTRIC CYAN BLAST */
+.service-motion-0 {
+  filter: hue-rotate(0deg) saturate(1.8) brightness(0.6) contrast(1.15);
+}
+.group:hover .service-motion-0 {
+  filter: hue-rotate(0deg) saturate(2.8) brightness(1.3) contrast(1.3);
+}
+
+/* 1. AI-Native Websites — DEEP ROYAL BLUE sweep */
+.service-motion-1 {
+  filter: hue-rotate(20deg) saturate(1.5) brightness(0.55) contrast(1.1);
+}
+.group:hover .service-motion-1 {
+  filter: hue-rotate(20deg) saturate(2.5) brightness(1.2) contrast(1.25);
+}
+
+/* 2. Conversational AI & Chatbots — COOL LAVENDER signal */
+.service-motion-2 {
+  filter: hue-rotate(-25deg) saturate(1.2) brightness(0.5) contrast(1.05);
+}
+.group:hover .service-motion-2 {
+  filter: hue-rotate(-25deg) saturate(2.2) brightness(1.15) contrast(1.2);
+}
+
+/* 3. Workflow Automation — BLAZING AMBER / COPPER fire */
+.service-motion-3 {
+  filter: hue-rotate(175deg) saturate(2.2) brightness(0.5) contrast(1.2) sepia(0.35);
+}
+.group:hover .service-motion-3 {
+  filter: hue-rotate(175deg) saturate(3.0) brightness(1.25) contrast(1.35) sepia(0.2);
+}
+
+/* 4. AI Strategy & Consulting — WARM CORAL-ROSE glow */
+.service-motion-4 {
+  filter: hue-rotate(305deg) saturate(1.4) brightness(0.5) contrast(1.1);
+}
+.group:hover .service-motion-4 {
+  filter: hue-rotate(305deg) saturate(2.4) brightness(1.2) contrast(1.25);
+}
+
+/* 5. 3D & Immersive — DEEP INDIGO / VIOLET shimmer */
+.service-motion-5 {
+  filter: hue-rotate(45deg) saturate(1.6) brightness(0.5) contrast(1.2);
+}
+.group:hover .service-motion-5 {
+  filter: hue-rotate(45deg) saturate(2.6) brightness(1.25) contrast(1.3);
+}
+
+/* 6. WhatsApp Automation — VIVID EMERALD GREEN pulse */
+.service-motion-6 {
+  filter: hue-rotate(95deg) saturate(2.0) brightness(0.5) contrast(1.15);
+}
+.group:hover .service-motion-6 {
+  filter: hue-rotate(95deg) saturate(3.0) brightness(1.2) contrast(1.3);
+}
+
+/* 7. Growth Systems — HOT GOLD-LIME energy */
+.service-motion-7 {
+  filter: hue-rotate(150deg) saturate(1.8) brightness(0.5) contrast(1.15) sepia(0.2);
+}
+.group:hover .service-motion-7 {
+  filter: hue-rotate(150deg) saturate(2.8) brightness(1.3) contrast(1.3) sepia(0.1);
+}
+
+/* ---- Light mode — on hover, card goes dark like dark mode ---- */
+.light .service-motion-video {
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+
+.light .group:hover .service-motion-video {
+  opacity: 0.75;
+  mix-blend-mode: normal;
+}
+
+.light .service-motion-mask {
+  background: linear-gradient(
+    180deg,
+    oklch(0.96 0.008 220 / 10%) 0%,
+    oklch(0.96 0.008 220 / 40%) 40%,
+    oklch(0.96 0.008 220 / 85%) 100%
+  );
+}
+
+.light .group:hover .service-motion-mask {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    oklch(0.03 0.005 260 / 10%) 25%,
+    oklch(0.03 0.005 260 / 45%) 60%,
+    oklch(0.03 0.005 260 / 80%) 100%
+  );
+}
+
+/* Light mode hover filters — same vivid brightness as dark mode */
+.light .service-motion-0 { filter: hue-rotate(0deg) saturate(1.4) brightness(0.9) contrast(0.9); }
+.light .group:hover .service-motion-0 { filter: hue-rotate(0deg) saturate(2.8) brightness(1.3) contrast(1.3); }
+
+.light .service-motion-1 { filter: hue-rotate(20deg) saturate(1.2) brightness(0.85) contrast(0.9); }
+.light .group:hover .service-motion-1 { filter: hue-rotate(20deg) saturate(2.5) brightness(1.2) contrast(1.25); }
+
+.light .service-motion-2 { filter: hue-rotate(-25deg) saturate(0.9) brightness(0.85) contrast(0.85); }
+.light .group:hover .service-motion-2 { filter: hue-rotate(-25deg) saturate(2.2) brightness(1.15) contrast(1.2); }
+
+.light .service-motion-3 { filter: hue-rotate(175deg) saturate(1.5) brightness(0.85) contrast(0.95) sepia(0.25); }
+.light .group:hover .service-motion-3 { filter: hue-rotate(175deg) saturate(3.0) brightness(1.25) contrast(1.35) sepia(0.2); }
+
+.light .service-motion-4 { filter: hue-rotate(305deg) saturate(1.0) brightness(0.85) contrast(0.9); }
+.light .group:hover .service-motion-4 { filter: hue-rotate(305deg) saturate(2.4) brightness(1.2) contrast(1.25); }
+
+.light .service-motion-5 { filter: hue-rotate(45deg) saturate(1.1) brightness(0.85) contrast(1.0); }
+.light .group:hover .service-motion-5 { filter: hue-rotate(45deg) saturate(2.6) brightness(1.25) contrast(1.3); }
+
+.light .service-motion-6 { filter: hue-rotate(95deg) saturate(1.4) brightness(0.85) contrast(0.95); }
+.light .group:hover .service-motion-6 { filter: hue-rotate(95deg) saturate(3.0) brightness(1.2) contrast(1.3); }
+
+.light .service-motion-7 { filter: hue-rotate(150deg) saturate(1.2) brightness(0.85) contrast(0.95) sepia(0.1); }
+.light .group:hover .service-motion-7 { filter: hue-rotate(150deg) saturate(2.8) brightness(1.3) contrast(1.3) sepia(0.1); }
+
+/* ---- Mobile: still show motion but toned down ---- */
+@media (max-width: 768px) {
+  .service-motion-video {
+    opacity: 0.08 !important;
+    animation: none !important;
+    transform: scale(1.1) !important;
+  }
+  .group:hover .service-motion-video {
+    opacity: 0.55 !important;
+  }
+  .light .service-motion-video {
+    opacity: 0.05 !important;
+  }
+  .light .group:hover .service-motion-video {
+    opacity: 0.5 !important;
+    mix-blend-mode: normal !important;
+  }
+}
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 6px;
@@ -476,5 +693,9 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .service-motion-video {
+    display: none !important;
   }
 }

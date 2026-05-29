@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-interface GlassCardProps {
+interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   className?: string;
   variant?: "default" | "cyan" | "strong";
@@ -15,6 +15,7 @@ export function GlassCard({
   className,
   variant = "default",
   hover = true,
+  ...props
 }: GlassCardProps) {
   const variants = {
     default: "glass",
@@ -31,6 +32,7 @@ export function GlassCard({
         variant === "cyan" && hover && "hover:glow-cyan",
         className
       )}
+      {...props}
     >
       {children}
     </div>
