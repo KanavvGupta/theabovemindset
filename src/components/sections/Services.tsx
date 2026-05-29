@@ -75,16 +75,16 @@ const serviceSpotlights = [
 // Video source — single asset cached by browser, recolored per card via CSS filters
 const MOTION_VIDEO_SRC = "/videos/wave-motion.mp4";
 
-// Harmonized color theory accent highlights per card index
+// Harmonized color theory accent highlights per card index (dark in light mode, light in dark mode)
 const highlightColors = [
-  "text-tam-cyan",                        // 0. Agentic AI (cyan)
-  "text-blue-400 dark:text-blue-300",     // 1. AI-Native Websites (blue)
-  "text-indigo-400 dark:text-indigo-300", // 2. Conversational AI (indigo)
-  "text-orange-400 dark:text-orange-300", // 3. Workflow Automation (orange)
-  "text-purple-400 dark:text-purple-300", // 4. AI Strategy (purple)
-  "text-cyan-400 dark:text-cyan-300",     // 5. 3D Web (cyan)
-  "text-tam-green",                       // 6. WhatsApp (green)
-  "text-amber-400 dark:text-amber-300",   // 7. Growth Systems (amber)
+  "text-tam-cyan-dark dark:text-tam-cyan",                  // 0. Agentic AI (cyan)
+  "text-blue-700 dark:text-blue-300",                       // 1. AI-Native Websites (blue)
+  "text-indigo-700 dark:text-indigo-300",                   // 2. Conversational AI (indigo)
+  "text-orange-700 dark:text-orange-300",                   // 3. Workflow Automation (orange)
+  "text-purple-700 dark:text-purple-300",                   // 4. AI Strategy (purple)
+  "text-cyan-700 dark:text-cyan-300",                       // 5. 3D Web (cyan)
+  "text-emerald-700 dark:text-tam-green",                   // 6. WhatsApp (green)
+  "text-amber-800 dark:text-amber-300",                     // 7. Growth Systems (amber)
 ];
 
 export default function Services() {
@@ -98,12 +98,12 @@ export default function Services() {
     videoRefs.current[index] = el;
   }, []);
 
-  // Performance-focused play/pause handler: only runs hovered video at 60 FPS
+  // Performance-focused play/pause handler: only runs hovered video at 60 FPS (normal speed)
   useEffect(() => {
     videoRefs.current.forEach((video, idx) => {
       if (!video) return;
       if (hoveredIdx === idx) {
-        video.playbackRate = 0.25; // Slowed down for ultra-smooth premium drift without lag
+        video.playbackRate = 1.0; // Play at normal speed as requested
         video.play().catch(() => {
           // Autoplay blocked — degrade gracefully
         });
@@ -151,7 +151,7 @@ export default function Services() {
   // Parses markdown-like **bolding** to apply specific color accents and subtle glow
   const renderHighlightedText = (text: string, index: number, isHovered: boolean) => {
     const parts = text.split(/(\*\*.*?\*\*)/g);
-    const highlightColorClass = highlightColors[index] || "text-tam-cyan";
+    const highlightColorClass = highlightColors[index] || "text-tam-cyan-dark dark:text-tam-cyan";
 
     return parts.map((part, idx) => {
       if (part.startsWith("**") && part.endsWith("**")) {
@@ -160,11 +160,8 @@ export default function Services() {
           <strong
             key={idx}
             className={`font-bold transition-all duration-500 ${
-              isHovered ? `${highlightColorClass}` : "text-white dark:text-white"
+              isHovered ? `${highlightColorClass} service-highlight` : "text-inherit"
             }`}
-            style={{
-              textShadow: isHovered ? "0 0 8px currentColor" : "none",
-            }}
           >
             {cleanText}
           </strong>

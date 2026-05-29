@@ -12,23 +12,23 @@ import type { ServiceData } from "@/data/services";
 const getHighlightColor = (slug: string) => {
   switch (slug) {
     case "agentic-ai-systems":
-      return "text-tam-cyan";
+      return "text-tam-cyan-dark dark:text-tam-cyan";
     case "ai-native-websites":
-      return "text-blue-400 dark:text-blue-300";
+      return "text-blue-700 dark:text-blue-300";
     case "conversational-ai-chatbots":
-      return "text-indigo-400 dark:text-indigo-300";
+      return "text-indigo-700 dark:text-indigo-300";
     case "workflow-automation":
-      return "text-orange-400 dark:text-orange-300";
+      return "text-orange-700 dark:text-orange-300";
     case "ai-strategy-consulting":
-      return "text-purple-400 dark:text-purple-300";
+      return "text-purple-700 dark:text-purple-300";
     case "3d-immersive-experiences":
-      return "text-cyan-400 dark:text-cyan-300";
+      return "text-cyan-700 dark:text-cyan-300";
     case "whatsapp-automation":
-      return "text-tam-green";
+      return "text-emerald-700 dark:text-tam-green";
     case "growth-systems":
-      return "text-amber-400 dark:text-amber-300";
+      return "text-amber-800 dark:text-amber-300";
     default:
-      return "text-tam-cyan";
+      return "text-tam-cyan-dark dark:text-tam-cyan";
   }
 };
 
@@ -51,10 +51,7 @@ export function ServiceLibrary({ service }: ServiceLibraryProps) {
         return (
           <strong
             key={idx}
-            className={`font-bold transition-all duration-500 ${highlightColorClass}`}
-            style={{
-              textShadow: "0 0 8px currentColor",
-            }}
+            className={`font-bold transition-all duration-500 ${highlightColorClass} subpage-highlight`}
           >
             {cleanText}
           </strong>
