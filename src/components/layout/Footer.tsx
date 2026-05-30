@@ -32,16 +32,10 @@ export default function Footer() {
                 className="w-7 h-7 object-contain rounded-md"
                 style={{ filter: "brightness(1.1)" }}
               />
-              <div className="flex items-center gap-1.5">
-                <span className="text-sm font-bold tracking-[0.15em] text-foreground uppercase">
-                  The
-                </span>
-                <span className="text-sm font-black tracking-[0.15em] text-tam-cyan uppercase px-1.5 py-0.5 border border-tam-cyan/40 bg-tam-cyan/5">
-                  Above
-                </span>
-                <span className="text-sm font-bold tracking-[0.15em] text-foreground uppercase">
-                  Mindset
-                </span>
+              <div className="flex items-center gap-1 font-anton text-[13px] tracking-wider uppercase">
+                <span className="text-foreground">The</span>
+                <span className="bg-foreground text-background px-1.5 py-0.5 rounded-sm">Above</span>
+                <span className="text-foreground">Mindset</span>
               </div>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs">

@@ -69,10 +69,10 @@ export default function Navbar() {
               className="w-8 h-8 object-contain rounded-md"
               style={{ filter: "brightness(1.1)" }}
             />
-            <div className="hidden sm:flex items-center gap-1.5">
-              <span className="text-sm font-bold tracking-[0.15em] text-foreground uppercase">The</span>
-              <span className="text-sm font-black tracking-[0.15em] text-tam-cyan uppercase px-1.5 py-0.5 border border-tam-cyan/40 bg-tam-cyan/5 group-hover:bg-tam-cyan/10 transition-colors">Above</span>
-              <span className="text-sm font-bold tracking-[0.15em] text-foreground uppercase">Mindset</span>
+            <div className="hidden sm:flex items-center gap-1 font-anton text-[13px] tracking-wider uppercase">
+              <span className="text-foreground">The</span>
+              <span className="bg-foreground text-background px-1.5 py-0.5 rounded-sm transition-colors duration-300 group-hover:bg-tam-cyan group-hover:text-black">Above</span>
+              <span className="text-foreground">Mindset</span>
             </div>
           </Link>
 

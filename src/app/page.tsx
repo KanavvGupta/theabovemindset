@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
+import { AnimatePresence } from "framer-motion";
 import { useLenis } from "@/hooks/useLenis";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -45,7 +46,9 @@ export default function Home() {
   return (
     <>
       {/* Loading experience */}
-      {!isLoaded && <Loader onComplete={handleLoaderComplete} />}
+      <AnimatePresence>
+        {!isLoaded && <Loader onComplete={handleLoaderComplete} />}
+      </AnimatePresence>
 
       {/* Main content */}
       <div
@@ -68,3 +71,4 @@ export default function Home() {
     </>
   );
 }
+
