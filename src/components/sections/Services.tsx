@@ -88,20 +88,43 @@ export default function Services() {
     videoRefs.current[index] = el;
   }, []);
 
-  // Performance-focused play/pause handler: only runs hovered video at 60 FPS (normal speed)
+  // Performance-focused autoplay and viewport visibility loop
   useEffect(() => {
-    videoRefs.current.forEach((video, idx) => {
-      if (!video) return;
-      if (hoveredIdx === idx) {
-        video.playbackRate = 1.0; // Play at normal speed as requested
+    // Auto-play all videos initially
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        video.playbackRate = 1.0;
         video.play().catch(() => {
-          // Autoplay blocked — degrade gracefully
+          // Autoplay blocked - browser will handle gracefully
         });
-      } else {
-        video.pause();
       }
     });
-  }, [hoveredIdx]);
+
+    // IntersectionObserver to pause videos when scrolled out of view (saves CPU/GPU resources)
+    let observer: IntersectionObserver | null = null;
+    if (sectionRef.current && typeof window !== "undefined" && "IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            videoRefs.current.forEach((video) => {
+              if (!video) return;
+              if (entry.isIntersecting) {
+                video.play().catch(() => {});
+              } else {
+                video.pause();
+              }
+            });
+          });
+        },
+        { threshold: 0.05 }
+      );
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (observer) observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     // Dynamic theme observer to update light mode states
